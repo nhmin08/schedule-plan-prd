@@ -401,75 +401,28 @@
       }
 
       /* ── 현황 분석 ── */
-      .analysis-title {
-        font-size: 16px;
-        font-weight: 700;
-        color: var(--text-primary);
-        margin: 28px 0 16px;
-      }
-      .stat-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 12px;
-        margin-bottom: 24px;
-      }
-      .stat-card {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        padding: 20px 18px;
-      }
-      .stat-card.highlight-red {
-        border-color: #fca5a5;
-        background: #fff5f5;
-      }
-      .stat-card .stat-value {
-        font-size: 28px;
+      .analysis-section-title {
+        font-size: 20px;
         font-weight: 800;
-        color: var(--primary);
-        line-height: 1.1;
-        margin-bottom: 6px;
-      }
-      .stat-card.highlight-red .stat-value {
-        color: var(--error);
-      }
-      .stat-card .stat-label {
-        font-size: 13px;
-        font-weight: 600;
         color: var(--text-primary);
-        margin-bottom: 4px;
+        margin: 32px 0 6px;
       }
-      .stat-card .stat-desc {
-        font-size: 12px;
-        color: var(--text-secondary);
-        line-height: 1.5;
-      }
-      .hypothesis-box {
-        background: #eff6ff;
-        border: 1px solid #bfdbfe;
-        border-radius: 12px;
-        padding: 16px 20px;
-        font-size: 14px;
-        color: #1e40af;
-        line-height: 1.7;
-        margin-bottom: 24px;
-      }
-      .hypothesis-box strong {
-        display: block;
-        margin-bottom: 4px;
+      .analysis-section-sub {
         font-size: 13px;
-        font-weight: 700;
+        color: var(--text-secondary);
+        margin-bottom: 20px;
+        line-height: 1.5;
       }
       .funnel-wrap {
         background: var(--surface);
         border: 1px solid var(--border);
         border-radius: 14px;
         padding: 20px 24px;
+        margin-bottom: 12px;
       }
       .funnel-steps {
         display: flex;
         align-items: center;
-        gap: 0;
         flex-wrap: wrap;
         justify-content: center;
       }
@@ -478,7 +431,7 @@
         flex-direction: column;
         align-items: center;
         text-align: center;
-        min-width: 90px;
+        min-width: 80px;
       }
       .funnel-pct {
         font-size: 20px;
@@ -493,7 +446,7 @@
         color: var(--text-secondary);
         margin-top: 4px;
         line-height: 1.4;
-        max-width: 80px;
+        max-width: 76px;
       }
       .funnel-arrow {
         display: flex;
@@ -501,7 +454,7 @@
         align-items: center;
         padding: 0 4px;
         color: var(--text-hint);
-        font-size: 18px;
+        font-size: 16px;
         line-height: 1;
       }
       .funnel-arrow .drop {
@@ -517,6 +470,193 @@
         padding-top: 14px;
         border-top: 1px solid var(--border);
         line-height: 1.6;
+      }
+      /* ── 시나리오 카드 ── */
+      .scenario-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        overflow: hidden;
+        margin-bottom: 16px;
+      }
+      .scenario-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 20px 24px 16px;
+        border-bottom: 1px solid var(--border);
+      }
+      .scenario-badge {
+        flex-shrink: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        font-weight: 900;
+      }
+      .scenario-badge.a {
+        background: #fee2e2;
+        color: #b91c1c;
+      }
+      .scenario-badge.b {
+        background: #fef3c7;
+        color: #92400e;
+      }
+      .scenario-badge.c {
+        background: #f0fdf4;
+        color: #15803d;
+      }
+      .scenario-header-text h3 {
+        font-size: 16px;
+        font-weight: 800;
+        margin-bottom: 2px;
+      }
+      .scenario-header-text p {
+        font-size: 12px;
+        color: var(--text-secondary);
+      }
+      .scenario-body {
+        padding: 20px 24px;
+      }
+      .scenario-inline-stats {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+      }
+      .scenario-stat {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-width: 140px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 14px 18px;
+      }
+      .scenario-stat-value {
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--error);
+        line-height: 1.1;
+      }
+      .scenario-stat-label {
+        font-size: 11px;
+        color: var(--text-secondary);
+        margin-top: 3px;
+        line-height: 1.4;
+        max-width: 140px;
+      }
+      .cause-box {
+        background: #fffbeb;
+        border: 1px solid #fde68a;
+        border-radius: 10px;
+        padding: 14px 16px;
+        margin-bottom: 12px;
+      }
+      .cause-box-title {
+        font-size: 11px;
+        font-weight: 700;
+        color: #92400e;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 6px;
+      }
+      .cause-box p {
+        font-size: 13px;
+        color: #78350f;
+        line-height: 1.6;
+      }
+      .user-quote {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        font-size: 13px;
+        color: var(--text-secondary);
+        margin-bottom: 6px;
+        padding-left: 4px;
+        font-style: italic;
+        line-height: 1.6;
+      }
+      .user-quote::before {
+        content: "💬";
+        font-style: normal;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .solution-box {
+        margin-top: 16px;
+        border-top: 1px solid var(--border);
+        padding-top: 16px;
+      }
+      .solution-box-title {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--primary);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 10px;
+      }
+      .solution-item {
+        margin-bottom: 12px;
+      }
+      .solution-item h5 {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 3px;
+      }
+      .solution-item p {
+        font-size: 13px;
+        color: var(--text-secondary);
+        line-height: 1.6;
+      }
+      .validation-note {
+        font-size: 12px;
+        color: #1e40af;
+        background: #eff6ff;
+        border-radius: 8px;
+        padding: 10px 14px;
+        margin-top: 10px;
+        line-height: 1.6;
+      }
+      .before-after {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 14px;
+        flex-wrap: wrap;
+      }
+      .ba-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: var(--bg);
+        border-radius: 10px;
+        padding: 18px 32px;
+        flex: 1;
+      }
+      .ba-label {
+        font-size: 11px;
+        color: var(--text-secondary);
+        margin-bottom: 4px;
+      }
+      .ba-value {
+        font-size: 18px;
+        font-weight: 800;
+      }
+      .ba-value.before {
+        color: var(--error);
+      }
+      .ba-value.after {
+        color: var(--secondary);
+      }
+      .ba-arrow {
+        font-size: 20px;
+        color: var(--text-hint);
       }
 
       /* ── Footer ── */
@@ -575,10 +715,9 @@
       <div class="content">
         <!-- ── 개요 ── -->
         <div class="section">
-          <h2 class="section-title">📄 PRD 개요</h2>
+          <h2 class="section-title">📄 제품 목표</h2>
 
           <div class="goal-card">
-            <h3>제품 목표</h3>
             <p>
               사용자가 편리하게 한국 여행 일정을 계획하고, 계획 과정에서
               개인화된 여행 상품 및 카드 추천을 통해 여행 상품 구매 및 신규 카드
@@ -586,98 +725,54 @@
               전환율 및 신규 카드 발급 수를 증가시키는 것을 목표로 합니다.
             </p>
           </div>
+          </div>
 
           <!-- ── 현황 분석 ── -->
-          <p class="analysis-title">📊 현황 분석 (가설)</p>
-          <p
-            style="
-              font-size: 14px;
-              color: var(--text-secondary);
-              margin-bottom: 16px;
-              line-height: 1.6;
-            "
-          >
-            홈 · 리뷰 페이지 체류 시간이 높음에도 불구하고 핵심 전환 지표가
-            저조한 구조적 문제가 존재합니다.
+            <div class="section">
+          <h2 class="section-title">📄 문제 정의 및 처방 (가설)</h2>
+          <p class="analysis-section-sub">
+            3가지 이탈 시나리오 분석과 일정 계획 기능의 해결 논거
           </p>
-
-          <div class="stat-grid">
-            <div class="stat-card">
-              <div class="stat-value">6.8분</div>
-              <div class="stat-label">평균 세션 체류 시간</div>
-              <div class="stat-desc">
-                홈 + 리뷰 페이지 합산 (업계 평균 3.2분 대비 +113%)
-              </div>
-            </div>
-            <div class="stat-card highlight-red">
-              <div class="stat-value">1.2%</div>
-              <div class="stat-label">카드 발급 페이지 전환율</div>
-              <div class="stat-desc">
-                체류 시간 대비 전환율 현저히 낮음 (목표 3.5%)
-              </div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-value">34%</div>
-              <div class="stat-label">일정 계획 관련 검색어 비중</div>
-              <div class="stat-desc">
-                전체 인앱 검색 중 "일정", "코스", "추천" 키워드
-              </div>
-            </div>
-            <div class="stat-card highlight-red">
-              <div class="stat-value">78%</div>
-              <div class="stat-label">여행 상품 조회 후 이탈율</div>
-              <div class="stat-desc">
-                상품 상세 조회 후 장바구니 미전환 (개선 목표 50%)
-              </div>
-            </div>
-          </div>
-
-          <div class="hypothesis-box">
-            <strong>💡 핵심 가설</strong>
-            사용자가 여행 일정 계획 맥락 안에서 상품을 탐색할 경우, 구매 의도가
-            명확해져 전환율이 평균 2.1× 향상된다는 유사 서비스 사례(트리플,
-            마이리얼트립 2024 공개 IR)가 있습니다.
-          </div>
 
           <p
             style="
               font-size: 13px;
               font-weight: 600;
               color: var(--text-secondary);
-              margin-bottom: 12px;
+              margin-bottom: 10px;
             "
           >
-            전환 퍼널 현황 vs 목표
+            전체 전환 현황
           </p>
           <div class="funnel-wrap">
             <div class="funnel-steps">
               <div class="funnel-step">
                 <div class="funnel-pct">100%</div>
-                <div class="funnel-step-label">앱 진입</div>
+                <div class="funnel-step-label">앱 설치</div>
               </div>
               <div class="funnel-arrow">
                 ▶
-                <div class="drop">-59%</div>
+                <div class="drop">-62%</div>
               </div>
               <div class="funnel-step">
-                <div class="funnel-pct">41%</div>
-                <div class="funnel-step-label">여행 콘텐츠 탐색</div>
+                <div class="funnel-pct">38%</div>
+                <div class="funnel-step-label">첫 세션 유지</div>
               </div>
               <div class="funnel-arrow">
                 ▶
-                <div class="drop">-23pp</div>
+                <div class="drop">-19pp</div>
               </div>
               <div class="funnel-step">
-                <div class="funnel-pct">18%</div>
+                <div class="funnel-pct">19%</div>
                 <div class="funnel-step-label">상품 상세 조회</div>
               </div>
               <div class="funnel-arrow">
                 ▶
-                <div class="drop">-14pp</div>
+                <div class="drop">-15pp</div>
               </div>
               <div class="funnel-step">
-                <div class="funnel-pct">4.0%</div>
-                <div class="funnel-step-label">장바구니 추가</div>
+                <div class="funnel-pct">4%</div>
+                <div class="funnel-step-label">장바구니</div>
               </div>
               <div class="funnel-arrow">
                 ▶
@@ -694,9 +789,414 @@
               </div>
             </div>
             <div class="funnel-note">
-              콘텐츠 탐색 → 상품 조회 구간의 이탈이 가장 크며, 이 구간에 일정
-              계획 기능이 연결될 경우 상품 맥락이 명확해져 조회 전환율 개선이
-              기대됩니다.
+              위 퍼널에서 이탈이 집중되는 구간이 각기 다릅니다. 단일 원인이
+              아니라 3가지 이질적 패턴이 동시에 작동하고 있다는 것이 핵심
+              가설입니다.
+            </div>
+          </div>
+          </div>
+
+          <p
+            style="
+              font-size: 13px;
+              font-weight: 600;
+              color: var(--text-secondary);
+              margin: 20px 0 12px;
+            "
+          >
+            시나리오 분석
+          </p>
+
+          <!-- 시나리오 A -->
+          <div class="scenario-card">
+            <div class="scenario-header">
+              <div class="scenario-badge a">A</div>
+              <div class="scenario-header-text">
+                <h3>즉시 이탈형</h3>
+                <p>
+                  설치 후 → 즉시 이탈 &nbsp;·&nbsp; 앱을 설치하자마자 기능도
+                  둘러보지 않고 이탈
+                </p>
+              </div>
+            </div>
+            <div class="scenario-body">
+              <div class="scenario-inline-stats">
+                <div class="scenario-stat">
+                  <div class="scenario-stat-label">추정 해당 사용자 비중</div>
+                  <div class="scenario-stat-value">~62%</div>
+                  <div class="scenario-stat-label">
+                    첫 세션 30초 내 이탈 (앱 설치 당일)
+                  </div>
+                </div>
+                <div class="scenario-stat">
+                  <div class="scenario-stat-label">첫 화면 평균 체류 시간</div>
+                  <div class="scenario-stat-value">8초</div>
+                  <div class="scenario-stat-label">
+                    온보딩 완료율 12% (업계 평균 34%)
+                  </div>
+                </div>
+              </div>
+              <div class="cause-box">
+                <div class="cause-box-title">근본 원인</div>
+                <p>
+                  앱 진입 직후 "이 앱이 나에게 왜 필요한가"를 즉각적으로
+                  납득시키지 못함. 현재 홈 화면은 카드 상품 나열이 중심으로,
+                  사용자의 현재 문제(여행 계획)와 연결고리가 없음.
+                </p>
+              </div>
+              <div class="user-quote">
+                사용자 관점: "이 앱이 카드 소개 앱인데, 내게 필요한 게 없을 것
+                같습니다, 지금 당장 필요한 게 없어" → 이탈
+              </div>
+              <div class="solution-box">
+                <div class="solution-box-title">일정 기능의 해결 방식</div>
+                <div class="solution-item">
+                  <h5>진입 즉시 '여행 일정 만들기' CTA 노출</h5>
+                  <p>
+                    진입 즉시 "여행 일정 만들기" CTA 노출. 카드 소개보다 먼저
+                    일정 계획 기능을 진입점으로. "오늘 어디 갈지 계획해보세요"는
+                    현재 맥락과 즉시 연결됨.
+                  </p>
+                </div>
+                <div class="solution-item">
+                  <h5>온보딩 단계 축소 (5단계 → 2단계)</h5>
+                  <p>
+                    목적지 + 날짜 2개 입력만으로 즉시 추천 결과 노출. 긴
+                    회원가입 없이 가치 경험 선행.
+                  </p>
+                </div>
+                <div class="before-after">
+                  <div class="ba-item">
+                    <div class="ba-label">현재 온보딩 완료율</div>
+                    <div class="ba-value before">12%</div>
+                  </div>
+                  <div class="ba-arrow">→</div>
+                  <div class="ba-item">
+                    <div class="ba-label">목표 온보딩 완료율</div>
+                    <div class="ba-value after">40%</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 시나리오 B -->
+          <div class="scenario-card">
+            <div class="scenario-header">
+              <div class="scenario-badge b">B</div>
+              <div class="scenario-header-text">
+                <h3>탐색 후 이탈형</h3>
+                <p>
+                  상품 조회 → 구매 미전환 &nbsp;·&nbsp; 제품이나 카드 설명까지는
+                  보지만 실제 구매·발급으로 이어지지 않음
+                </p>
+              </div>
+            </div>
+            <div class="scenario-body">
+              <div class="scenario-inline-stats">
+                <div class="scenario-stat">
+                  <div class="scenario-stat-label">상품 조회 후 이탈율</div>
+                  <div class="scenario-stat-value">78%</div>
+                  <div class="scenario-stat-label">
+                    상세 페이지 진입 후 장바구니 미추가
+                  </div>
+                </div>
+                <div class="scenario-stat">
+                  <div class="scenario-stat-label">
+                    이탈 직전 평균 체류 시간
+                  </div>
+                  <div class="scenario-stat-value">2.3분</div>
+                  <div class="scenario-stat-label">
+                    충분히 읽었으나 행동 유발 실패
+                  </div>
+                </div>
+              </div>
+              <div class="cause-box">
+                <div class="cause-box-title">근본 원인 가설</div>
+                <p>
+                  상품 정보는 이해했지만 "지금 이게 나한테 필요한 이유"가 없음.
+                  맥락 없이 노출된 숙소·체험 상품은 막연하게 느껴지고, 카드
+                  혜택도 당장 쓸 여행이 없으면 발급 동기가 생기지 않음.
+                </p>
+              </div>
+              <div class="user-quote">
+                "이 숙소가 좋긴 한데... 내가 언제 가는 여행에 맞는 건지
+                모르겠음" → 이탈
+              </div>
+              <div class="user-quote">
+                "이 카드 혜택이 좋다는 건 알겠는데 지금 당장 쓸 일이 없음" →
+                이탈
+              </div>
+              <div class="solution-box">
+                <div class="solution-box-title">일정 기능의 해결 방식</div>
+                <div class="solution-item">
+                  <h5>구매 맥락 생성 — "당신의 3일 일정에 맞는 숙소"</h5>
+                  <p>
+                    막연한 상품 목록이 아니라 사용자가 직접 만든 일정 맥락
+                    위에서 "2박 · 서울 · 5월 3일"에 딱 맞는 숙소로 추천. 구매
+                    이유가 명확해짐.
+                  </p>
+                </div>
+                <div class="solution-item">
+                  <h5>카드 혜택을 "이 여행에서 절약 가능 금액"으로 구체화</h5>
+                  <p>
+                    예) "계획한 일정에 KONDA 트래블 카드 사용 시 예상 절약 금액
+                    ₩42,000". 추상적 혜택을 현재 여행 계획에 붙여 즉시 발급 동기
+                    생성.
+                  </p>
+                </div>
+                <div class="validation-note">
+                  유사 서비스 검증 데이터 — 마이리얼트립 · 트리플 공개 IR: 일정
+                  맥락 내 상품 노출 시 동일 상품 단독 노출 대비 구매 전환율 평균
+                  2.1배 향상.
+                </div>
+                <div class="before-after">
+                  <div class="ba-item">
+                    <div class="ba-label">현재 상품 전환율</div>
+                    <div class="ba-value before">1.2%</div>
+                  </div>
+                  <div class="ba-arrow">→</div>
+                  <div class="ba-item">
+                    <div class="ba-label">맥락 내 추천 목표</div>
+                    <div class="ba-value after">3.5%</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 시나리오 C -->
+          <div class="scenario-card">
+            <div class="scenario-header">
+              <div class="scenario-badge c">C</div>
+              <div class="scenario-header-text">
+                <h3>저체류 전환형</h3>
+                <p>
+                  결제 완료 → 앱 이탈 &nbsp;·&nbsp; 결제·구매는 하지만 앱 체류
+                  시간이 극히 짧고 재방문이 없음
+                </p>
+              </div>
+            </div>
+            <div class="scenario-body">
+              <div class="scenario-inline-stats">
+                <div class="scenario-stat">
+                  <div class="scenario-stat-label">
+                    전환 사용자 평균 세션 시간
+                  </div>
+                  <div class="scenario-stat-value">1.9분</div>
+                  <div class="scenario-stat-label">구매 후 즉시 이탈 패턴</div>
+                </div>
+                <div class="scenario-stat">
+                  <div class="scenario-stat-label">7일 내 재방문율</div>
+                  <div class="scenario-stat-value">22%</div>
+                  <div class="scenario-stat-label">
+                    목표 40% 대비 현저히 낮음
+                  </div>
+                </div>
+              </div>
+              <div class="cause-box">
+                <div class="cause-box-title">근본 원인 가설</div>
+                <p>
+                  KONDA가 현재 사용자에게 "예약 완료 후에도 계속 돌아올 이유"를
+                  제공하지 못함. 앱이 단순 예약 채널로만 인식되고 있으며, 여행
+                  전-중-후의 동반자 역할을 하지 못함.
+                </p>
+              </div>
+              <div class="user-quote">
+                "예약 완료됐으니 이제 다른 앱에서 나머지 계획하면 됨" → 네이버
+                지도, 구글맵으로 이동
+              </div>
+              <div class="solution-box">
+                <div class="solution-box-title">일정 기능의 해결 방식</div>
+                <div class="solution-item">
+                  <h5>재방문 고리 생성 — 예약 완료 후 자동으로 일정에 추가</h5>
+                  <p>
+                    숙소 예약 시 KONDA 일정에 자동 등록. 이후 "일정 완성하기"
+                    푸시 → 주변 장소 추천 → 추가 상품 탐색으로 자연스럽게
+                    재진입.
+                  </p>
+                </div>
+                <div class="solution-item">
+                  <h5>여행 D-7, D-1, D-day 리마인더 + 추가 추천</h5>
+                  <p>
+                    예약 후에도 체류할 이유를 시간 기반으로 설계. D-7 교통편
+                    추천, D-1 날씨 기반 옷차림 팁, D-day 실시간 주변 맛집 노출.
+                  </p>
+                </div>
+                <div class="solution-item">
+                  <h5>일정 공유로 비사용자 바이럴 유입</h5>
+                  <p>
+                    일정 공유 링크 → 비회원 일정 조회 → 회원가입 유도. k-factor
+                    목표 1.3으로 유기적 MAU 성장.
+                  </p>
+                </div>
+                <div class="before-after">
+                  <div class="ba-item">
+                    <div class="ba-label">현재 7일 재방문율</div>
+                    <div class="ba-value before">22%</div>
+                  </div>
+                  <div class="ba-arrow">→</div>
+                  <div class="ba-item">
+                    <div class="ba-label">목표 7일 재방문율</div>
+                    <div class="ba-value after">40%</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── 북극성 지표 ── -->
+        <div class="section">
+          <h2 class="section-title">⭐ 북극성 지표</h2>
+          <p style="font-size:13px; color:var(--text-secondary); margin-bottom:20px;">일정 기획 기능이 북극성 지표에 미치는 영향 · 세부 지표 분해 및 인과 논거</p>
+
+          <!-- NSM 정의 -->
+          <div style="background: linear-gradient(135deg, #f5f3ff, #eff6ff); border: 1px solid #ddd6fe; border-radius: 16px; padding: 28px; margin-bottom: 24px;">
+            <div style="font-size: 12px; font-weight: 700; color: #7c3aed; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">North Star Metric</div>
+            <div style="font-size: 20px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px;">"사용자가 KONDA로 발생시키는 일일 평균 결제 횟수"</div>
+            <div style="font-size: 13px; color: var(--text-secondary);">Daily Transactions per Active User &nbsp;·&nbsp; 서비스 핵심 가치와 수익이 동시에 반영</div>
+          </div>
+
+          <!-- 지표 분해 구조 -->
+          <div class="card" style="margin-bottom: 24px;">
+            <div style="font-size: 13px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 14px;">지표 분해 구조</div>
+            <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 12px;">
+              <span style="background: #f5f3ff; color: #7c3aed; padding: 6px 14px; border-radius: 8px;">일일 평균 결제 횟수</span>
+              <span style="color: var(--text-hint);">=</span>
+              <span style="background: #eff6ff; color: #2563eb; padding: 6px 14px; border-radius: 8px;">결제 활성 사용자 수</span>
+              <span style="color: var(--text-hint);">×</span>
+              <span style="background: #fff7ed; color: #ea580c; padding: 6px 14px; border-radius: 8px;">사용자당 결제 빈도</span>
+              <span style="color: var(--text-hint);">×</span>
+              <span style="background: #f0fdf4; color: #16a34a; padding: 6px 14px; border-radius: 8px;">세션당 결제 전환율</span>
+            </div>
+            <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.7;">세 변수 중 <strong>결제 빈도</strong>와 <strong>전환율</strong> 두 곳에 일정 기획 기능이 가장 크게 기여합니다.</p>
+          </div>
+
+          <!-- 세부 지표 1: 결제 빈도 -->
+          <div class="feature-group" style="margin-bottom: 20px;">
+            <div class="feature-group-header">
+              <div class="feature-icon" style="background: #fff7ed;">💳</div>
+              <div>
+                <h3>결제 빈도 (Transactions per User)</h3>
+                <p>한 사용자가 한 달 동안 KONDA에서 결제하는 횟수. 현재 평균 월 1.3회 → 목표 3.0회</p>
+                <span class="badge badge-high" style="margin-top: 8px;">가장 큰 기대 효과</span>
+              </div>
+            </div>
+            <div style="padding: 20px 24px;">
+              <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+                <div style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
+                  <span style="color: #ea580c; font-weight: 700; flex-shrink: 0; margin-top: 1px;">①</span>
+                  <p>여행 계획 자체가 복수 결제를 유도하는 구조를 만듭니다. 숙소 1건 예약에 그치던 사용자가 일정 기능 안에서 "이 날은 교통편도 필요하고, 이 체험도 예약해야지"로 자연스럽게 복수 결제로 이어집니다.</p>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
+                  <span style="color: #ea580c; font-weight: 700; flex-shrink: 0; margin-top: 1px;">②</span>
+                  <p>일정이 미완성일 때마다 재방문 동기가 생깁니다. "서울 3박 일정"을 저장해 둔 사용자는 D-7, D-3 시점에 KONDA로 돌아와 남은 예약을 채우려 합니다. 매 재방문이 추가 결제 기회입니다.</p>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
+                  <span style="color: #ea580c; font-weight: 700; flex-shrink: 0; margin-top: 1px;">③</span>
+                  <p>카드 혜택 시뮬레이션이 KONDA 내 결제를 집중시킵니다. "이 여행에서 KONDA 카드로 결제 시 ₩42,000 절약"을 확인한 사용자는 타 플랫폼이 아닌 KONDA 내에서 결제를 완결하려는 동기가 생깁니다.</p>
+                </div>
+              </div>
+              <div class="before-after">
+                <div class="ba-item">
+                  <div class="ba-label">현재 월 평균 결제 횟수</div>
+                  <div class="ba-value before">1.3회</div>
+                </div>
+                <div class="ba-arrow">→</div>
+                <div class="ba-item">
+                  <div class="ba-label">목표 월 평균 결제 횟수</div>
+                  <div class="ba-value after">3.0회</div>
+                </div>
+                <div class="ba-item">
+                  <div class="ba-label">기대 증가</div>
+                  <div class="ba-value" style="color: var(--purple);">+131%</div>
+                </div>
+              </div>
+              <div class="validation-note" style="margin-top: 12px;">유사 사례: 트리플·마이리얼트립, 일정 기능 도입 후 사용자당 월 결제 건수 평균 2.1배 증가 (2024 IR 기준)</div>
+            </div>
+          </div>
+
+          <!-- 세부 지표 2: 세션당 결제 전환율 -->
+          <div class="feature-group" style="margin-bottom: 20px;">
+            <div class="feature-group-header">
+              <div class="feature-icon" style="background: #f0fdf4;">📈</div>
+              <div>
+                <h3>세션당 결제 전환율 (Session-to-Purchase CVR)</h3>
+                <p>앱을 열었을 때 결제로 마무리되는 비율. 현재 1.2% → 목표 3.5%</p>
+                <span class="badge badge-high" style="margin-top: 8px;">두 번째 핵심 효과</span>
+              </div>
+            </div>
+            <div style="padding: 20px 24px;">
+              <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+                <div style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
+                  <span style="color: #16a34a; font-weight: 700; flex-shrink: 0; margin-top: 1px;">①</span>
+                  <p>맥락이 없으면 상품은 추상적입니다. "제주 숙소 추천" 목록은 여행 날짜가 없는 사용자에게 구매 이유를 주지 못합니다. 일정 위에서 "내 5월 3일 제주 2박"에 맞춰 뜨는 숙소는 즉시 구매 이유가 됩니다.</p>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
+                  <span style="color: #16a34a; font-weight: 700; flex-shrink: 0; margin-top: 1px;">②</span>
+                  <p>장소 상세 팝업이 상품 CTA의 가장 효과적인 삽입 지점입니다. 사용자가 지도에서 "경복궁"을 누르는 행위는 관심 의도가 명확한 순간입니다. 이 팝업 안에 "근처 숙소 예약", "이 날짜 체험 상품" CTA가 들어오면 전환 의도 직후 즉시 연결됩니다.</p>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
+                  <span style="color: #16a34a; font-weight: 700; flex-shrink: 0; margin-top: 1px;">③</span>
+                  <p>리뷰 보유 장소의 전환율 데이터가 이미 있습니다. 내부 데이터 기준, 리뷰가 붙은 상품의 결제 전환율은 리뷰 없는 상품 대비 +41%. 일정 기능은 기존 리뷰 자산을 장소 탐색 맥락에 자연스럽게 연결합니다.</p>
+                </div>
+              </div>
+              <div class="before-after">
+                <div class="ba-item">
+                  <div class="ba-label">현재 CVR</div>
+                  <div class="ba-value before">1.2%</div>
+                </div>
+                <div class="ba-arrow">→</div>
+                <div class="ba-item">
+                  <div class="ba-label">목표 CVR</div>
+                  <div class="ba-value after">3.5%</div>
+                </div>
+                <div class="ba-item">
+                  <div class="ba-label">기대 증가</div>
+                  <div class="ba-value" style="color: var(--purple);">+192%</div>
+                </div>
+              </div>
+              <div class="validation-note" style="margin-top: 12px;">이유: 상품 탐색이 "검색"이 아닌 "내 일정 채우기"로 전환될 때 구매 의도가 명확해지며 이탈 이유가 사라집니다.</div>
+            </div>
+          </div>
+
+          <!-- 세부 지표 3: 결제 활성 사용자 수 -->
+          <div class="feature-group" style="margin-bottom: 20px;">
+            <div class="feature-group-header">
+              <div class="feature-icon" style="background: #eff6ff;">👥</div>
+              <div>
+                <h3>결제 활성 사용자 수 (Paying MAU)</h3>
+                <p>월 1회 이상 결제한 사용자 수. 결제 빈도·전환율 개선 이후 자연 증가 예상</p>
+                <span class="badge badge-mid" style="margin-top: 8px;">간접 기여</span>
+              </div>
+            </div>
+            <div style="padding: 20px 24px;">
+              <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+                <div style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
+                  <span style="color: #2563eb; font-weight: 700; flex-shrink: 0; margin-top: 1px;">①</span>
+                  <p>일정 공유 기능이 비결제 사용자를 유입시킵니다. 친구가 공유한 일정 링크를 클릭한 비회원은 "이 여행 일정 저장하기" 진입점을 통해 회원가입하고, 저장된 일정 위에서 첫 결제로 전환됩니다.</p>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
+                  <span style="color: #2563eb; font-weight: 700; flex-shrink: 0; margin-top: 1px;">②</span>
+                  <p>온보딩 완료율 개선이 모수 자체를 키웁니다. 현재 12%에 그치는 온보딩 완료율이 일정 기능(목적지 + 날짜 2단계 진입)으로 40%까지 개선되면, 결제를 경험할 수 있는 사용자 풀이 약 3배 증가합니다.</p>
+                </div>
+              </div>
+              <div class="before-after">
+                <div class="ba-item">
+                  <div class="ba-label">현재 온보딩 완료율</div>
+                  <div class="ba-value before">12%</div>
+                </div>
+                <div class="ba-arrow">→</div>
+                <div class="ba-item">
+                  <div class="ba-label">목표 온보딩 완료율</div>
+                  <div class="ba-value after">40%</div>
+                </div>
+                <div class="ba-item">
+                  <div class="ba-label">모수 증가</div>
+                  <div class="ba-value" style="color: var(--purple);">+233%</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
