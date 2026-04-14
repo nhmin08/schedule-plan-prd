@@ -3,1863 +3,1748 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KONDA 일정 계획 기능 기획서</title>
+    <title>KONDA 일정 계획 기능 PRD</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard.css"
+    />
     <style>
+      /* ── Toss Design System ── */
       :root {
-        --primary: #2563eb;
-        --primary-light: #dbeafe;
-        --secondary: #10b981;
-        --bg: #f8fafc;
-        --surface: #ffffff;
-        --border: #e2e8f0;
-        --text-primary: #1e293b;
-        --text-secondary: #64748b;
-        --text-hint: #94a3b8;
-        --error: #ef4444;
-        --warning: #f59e0b;
-        --purple: #7c3aed;
+        --ink: #191f28;
+        --ink-2: #6b7684;
+        --ink-3: #b0b8c1;
+        --ink-4: #d1d6db;
+        --paper: #ffffff;
+        --paper-2: #f2f4f6;
+        --paper-3: #e5e8eb;
+        --teal: #0052ff;
+        --teal-light: #ebf2ff;
+        --teal-mid: #3172f5;
+        --amber: #f59e0b;
+        --amber-light: #fffbeb;
+        --red: #f03e3e;
+        --red-light: #fff5f5;
+        --blue: #7950f2;
+        --blue-light: #f3f0ff;
+        --rule: rgba(0, 0, 0, 0.07);
       }
 
-      * {
+      *,
+      *::before,
+      *::after {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
       }
+      html {
+        font-size: 16px;
+      }
 
       body {
         font-family:
-          -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR",
+          "Pretendard",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Apple SD Gothic Neo",
+          "Segoe UI",
+          system-ui,
           sans-serif;
-        background: var(--bg);
-        color: var(--text-primary);
-        line-height: 1.6;
-      }
-
-      /* ── Header ── */
-      .header {
-        background: linear-gradient(
-          135deg,
-          #1e3a8a 0%,
-          #2563eb 50%,
-          #7c3aed 100%
-        );
-        color: white;
-        padding: 64px 0 80px;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-      }
-      .header::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-      }
-      .header-inner {
-        position: relative;
-        z-index: 1;
-      }
-      .logo {
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 24px;
-      }
-      .logo-icon {
-        width: 56px;
-        height: 56px;
-        background: white;
-        border-radius: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 28px;
-        font-weight: 900;
-        color: var(--primary);
-      }
-      .logo-text {
-        font-size: 32px;
-        font-weight: 900;
-        letter-spacing: 4px;
-      }
-      .header h1 {
-        font-size: clamp(20px, 4vw, 28px);
-        font-weight: 700;
-        opacity: 0.9;
-        margin-bottom: 12px;
-      }
-      .header-meta {
-        display: flex;
-        justify-content: center;
-        gap: 24px;
-        flex-wrap: wrap;
-        margin-top: 20px;
-        opacity: 0.75;
-        font-size: 14px;
-      }
-      .header-meta span {
-        display: flex;
-        align-items: center;
-        gap: 6px;
+        background: var(--paper);
+        color: var(--ink);
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
       }
 
       /* ── Layout ── */
-      .container {
-        max-width: 960px;
+      .page {
+        max-width: 780px;
         margin: 0 auto;
-        padding: 0 24px;
+        padding: 0 2rem 6rem;
       }
-      .content {
-        padding: 56px 0 80px;
+
+      /* ── Cover (dark hero) ── */
+      .cover {
+        margin: 0 -2rem 4rem;
+        padding: 4.5rem 2rem 3.5rem;
+        background: #0d1117;
+        position: relative;
+        overflow: hidden;
+      }
+      .cover::before {
+        content: "";
+        position: absolute;
+        top: -120px;
+        right: -80px;
+        width: 420px;
+        height: 420px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(49, 114, 245, 0.18) 0%,
+          transparent 65%
+        );
+        pointer-events: none;
+      }
+      .cover::after {
+        content: "";
+        position: absolute;
+        bottom: -80px;
+        left: 40px;
+        width: 280px;
+        height: 280px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(0, 82, 255, 0.08) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+
+      .cover-kicker {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #3172f5;
+        margin-bottom: 1.5rem;
+      }
+      .cover-kicker-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #3172f5;
+        box-shadow: 0 0 8px rgba(49, 114, 245, 0.6);
+      }
+
+      .cover h1 {
+        font-size: clamp(2.2rem, 5vw, 3.2rem);
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: -0.03em;
+        color: #ffffff;
+        margin-bottom: 1.25rem;
+      }
+      .cover h1 em {
+        font-style: normal;
+        color: #3172f5;
+      }
+      .cover-sub {
+        font-size: 1rem;
+        color: rgba(255, 255, 255, 0.55);
+        max-width: 520px;
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+        font-weight: 400;
+      }
+      .cover-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .meta-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.74rem;
+        font-weight: 500;
+        padding: 0.3rem 0.9rem;
+        border-radius: 2rem;
+        background: rgba(255, 255, 255, 0.07);
+        color: rgba(255, 255, 255, 0.65);
+        border: 1px solid rgba(255, 255, 255, 0.1);
       }
 
       /* ── Section ── */
       .section {
-        margin-bottom: 56px;
+        margin-bottom: 4rem;
       }
-      .section-title {
-        font-size: 22px;
-        font-weight: 800;
-        color: var(--text-primary);
-        border-left: 4px solid var(--primary);
-        padding-left: 16px;
-        margin-bottom: 24px;
+      .section-label {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--teal);
+        margin-bottom: 2rem;
+      }
+      .section-label::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--paper-3);
+      }
+      .section-num {
+        font-size: 0.78rem;
+        color: var(--ink-3);
+        font-weight: 700;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        line-height: 1.25;
+        letter-spacing: -0.025em;
+        color: var(--ink);
+        margin-bottom: 1rem;
+      }
+      h3 {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--ink);
+        margin-bottom: 0.5rem;
+      }
+      p {
+        font-size: 0.935rem;
+        color: var(--ink-2);
+        line-height: 1.75;
+      }
+      p + p {
+        margin-top: 0.75rem;
       }
 
       /* ── Cards ── */
       .card {
-        background: var(--surface);
-        border: 1px solid var(--border);
+        background: var(--paper);
+        border: 1px solid var(--paper-3);
         border-radius: 16px;
-        padding: 24px;
-        margin-bottom: 16px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        box-shadow:
+          0 1px 2px rgba(0, 0, 0, 0.04),
+          0 4px 16px rgba(0, 0, 0, 0.04);
       }
-      .card-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 16px;
+      .card-sm {
+        background: var(--paper);
+        border: 1px solid var(--paper-3);
+        border-radius: 12px;
+        padding: 1.1rem 1.25rem;
       }
 
-      /* ── Info blocks ── */
-      .info-block {
-        margin-bottom: 20px;
+      /* ── NSM Box ── */
+      .nsm {
+        background: linear-gradient(135deg, #0d1117 0%, #161d2c 100%);
+        border: 1px solid rgba(49, 114, 245, 0.2);
+        border-radius: 16px;
+        padding: 2rem 2.25rem;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
       }
-      .info-block h4 {
-        font-size: 13px;
+      .nsm::before {
+        content: "";
+        position: absolute;
+        top: -60px;
+        right: -60px;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(0, 82, 255, 0.18) 0%,
+          transparent 70%
+        );
+      }
+      .nsm-kicker {
+        font-size: 0.68rem;
         font-weight: 700;
+        letter-spacing: 0.16em;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
-        color: var(--text-secondary);
-        margin-bottom: 8px;
+        color: #3172f5;
+        margin-bottom: 0.65rem;
       }
-      .info-block p {
-        font-size: 15px;
-        color: var(--text-primary);
-        line-height: 1.7;
-      }
-
-      /* ── Highlight box ── */
-      .highlight {
-        background: linear-gradient(135deg, #eff6ff, #f5f3ff);
-        border: 1px solid #c7d2fe;
-        border-radius: 16px;
-        padding: 28px;
-        margin-bottom: 16px;
-      }
-      .highlight h3 {
-        font-size: 16px;
+      .nsm-title {
+        font-size: 1.35rem;
         font-weight: 700;
-        color: var(--primary);
-        margin-bottom: 8px;
-      }
-      .highlight p {
-        font-size: 14px;
-        color: var(--text-secondary);
-        line-height: 1.7;
-      }
-
-      /* ── Goal card ── */
-      .goal-card {
-        background: linear-gradient(135deg, #2563eb, #1d4ed8);
         color: white;
-        border-radius: 20px;
-        padding: 32px;
-        margin-bottom: 24px;
+        line-height: 1.3;
+        letter-spacing: -0.015em;
+        margin-bottom: 0.5rem;
       }
-      .goal-card h3 {
-        font-size: 18px;
-        font-weight: 700;
-        margin-bottom: 12px;
-        opacity: 0.9;
-      }
-      .goal-card p {
-        font-size: 15px;
-        line-height: 1.7;
-        opacity: 0.85;
+      .nsm-sub {
+        font-size: 0.82rem;
+        color: rgba(255, 255, 255, 0.38);
       }
 
-      /* ── KPI ── */
-      .kpi-grid {
+      /* ── Metric grid ── */
+      .metric-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-        gap: 12px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
       }
-      .kpi-item {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        padding: 18px 16px;
-        text-align: center;
+      .metric-card {
+        background: var(--paper-2);
+        border-radius: 12px;
+        padding: 1rem 1.1rem;
       }
-      .kpi-icon {
-        font-size: 28px;
-        margin-bottom: 8px;
-      }
-      .kpi-label {
-        font-size: 13px;
-        color: var(--text-secondary);
+      .metric-label {
+        font-size: 0.73rem;
+        color: var(--ink-3);
+        margin-bottom: 0.2rem;
         font-weight: 500;
+      }
+      .metric-val {
+        font-size: 1.55rem;
+        font-weight: 300;
+        color: var(--ink);
+        line-height: 1;
+      }
+      .metric-val strong {
+        font-weight: 600;
+      }
+      .metric-note {
+        font-size: 0.73rem;
+        color: var(--ink-3);
+        margin-top: 0.3rem;
         line-height: 1.4;
       }
 
-      /* ── Feature table ── */
-      .feature-group {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 20px;
-        overflow: hidden;
-        margin-bottom: 20px;
+      /* ── Tag ── */
+      .tag {
+        display: inline-block;
+        font-size: 0.7rem;
+        font-weight: 600;
+        padding: 0.2rem 0.65rem;
+        border-radius: 4px;
       }
-      .feature-group-header {
-        padding: 20px 24px;
-        border-bottom: 1px solid var(--border);
+      .tag-teal {
+        background: var(--teal-light);
+        color: var(--teal);
+      }
+      .tag-amber {
+        background: var(--amber-light);
+        color: #b45309;
+      }
+      .tag-red {
+        background: var(--red-light);
+        color: var(--red);
+      }
+      .tag-blue {
+        background: var(--blue-light);
+        color: var(--blue);
+      }
+      .tag-gray {
+        background: var(--paper-2);
+        color: var(--ink-2);
+      }
+
+      /* ── Scenario cards ── */
+      .scenario {
+        border: 1px solid var(--paper-3);
+        border-radius: 14px;
+        overflow: hidden;
+        margin-bottom: 1rem;
+        box-shadow:
+          0 1px 2px rgba(0, 0, 0, 0.04),
+          0 2px 8px rgba(0, 0, 0, 0.03);
+      }
+      .scenario-head {
         display: flex;
         align-items: flex-start;
-        gap: 12px;
+        gap: 1rem;
+        padding: 1.25rem 1.5rem;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
       }
-      .feature-group-header h3 {
-        font-size: 17px;
-        font-weight: 700;
-      }
-      .feature-group-header p {
-        font-size: 13px;
-        color: var(--text-secondary);
-        margin-top: 4px;
-        line-height: 1.6;
-      }
-      .feature-icon {
-        width: 44px;
-        height: 44px;
-        border-radius: 12px;
+      .scenario-letter {
+        width: 34px;
+        height: 34px;
+        border-radius: 9px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 22px;
+        font-size: 1rem;
+        font-weight: 700;
         flex-shrink: 0;
       }
-      .feature-list {
-        padding: 8px 0;
+      .scenario-body {
+        flex: 1;
       }
+      .scenario-title {
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin-bottom: 0.2rem;
+        color: var(--ink);
+      }
+      .scenario-desc {
+        font-size: 0.82rem;
+        color: var(--ink-3);
+      }
+      .scenario-content {
+        padding: 1.25rem 1.5rem;
+        background: var(--paper);
+      }
+      .scenario-content .reason {
+        display: flex;
+        gap: 0.75rem;
+        padding: 0.6rem 0;
+        border-bottom: 1px solid var(--rule);
+        font-size: 0.85rem;
+        color: var(--ink-2);
+        line-height: 1.6;
+      }
+      .scenario-content .reason:last-of-type {
+        border-bottom: none;
+        margin-bottom: 0.75rem;
+      }
+      .reason-marker {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        margin-top: 0.58rem;
+      }
+      .impact-strip {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        background: var(--teal-light);
+        border-radius: 8px;
+        padding: 0.65rem 0.9rem;
+        font-size: 0.82rem;
+      }
+      .impact-before {
+        color: var(--ink-3);
+      }
+      .impact-arrow {
+        color: var(--ink-4);
+        font-size: 0.75rem;
+      }
+      .impact-after {
+        color: var(--teal);
+        font-weight: 600;
+      }
+      .impact-spacer {
+        flex: 1;
+      }
+      .impact-note {
+        font-size: 0.75rem;
+        color: var(--teal);
+        font-weight: 500;
+      }
+
+      /* ── Formula ── */
+      .formula-row {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        padding: 1.25rem 1.5rem;
+        background: var(--paper);
+        border: 1px solid var(--paper-3);
+        border-radius: 14px;
+        margin-bottom: 1rem;
+        font-size: 0.88rem;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+      }
+      .formula-chip {
+        padding: 0.3rem 0.8rem;
+        border-radius: 6px;
+        font-weight: 600;
+      }
+      .formula-op {
+        color: var(--ink-3);
+        font-weight: 300;
+        font-size: 1.1rem;
+      }
+      .formula-note {
+        width: 100%;
+        font-size: 0.78rem;
+        color: var(--ink-3);
+        padding-top: 0.5rem;
+        border-top: 1px solid var(--rule);
+        margin-top: 0.25rem;
+      }
+
+      /* ── KPI table ── */
+      .kpi-row {
+        display: grid;
+        grid-template-columns: 1fr auto auto auto;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.9rem 0;
+        border-bottom: 1px solid var(--rule);
+        font-size: 0.855rem;
+      }
+      .kpi-row:last-child {
+        border-bottom: none;
+      }
+      .kpi-label {
+        color: var(--ink);
+        font-weight: 600;
+      }
+      .kpi-baseline {
+        color: var(--ink-3);
+        font-size: 0.8rem;
+        text-align: right;
+      }
+      .kpi-target {
+        color: var(--teal);
+        font-weight: 700;
+        text-align: right;
+        white-space: nowrap;
+      }
+      .kpi-how {
+        font-size: 0.75rem;
+        color: var(--ink-3);
+        text-align: right;
+      }
+      .kpi-sub {
+        font-size: 0.78rem;
+        color: var(--ink-3);
+        margin-top: 0.15rem;
+        font-weight: 400;
+      }
+
+      /* ── Progress bar ── */
+      .bar-wrap {
+        height: 4px;
+        background: var(--paper-3);
+        border-radius: 2px;
+        width: 80px;
+      }
+      .bar-fill {
+        height: 4px;
+        border-radius: 2px;
+      }
+
+      /* ── Feature list ── */
       .feature-item {
         display: flex;
+        gap: 1rem;
         align-items: flex-start;
-        gap: 16px;
-        padding: 16px 24px;
-        border-bottom: 1px solid var(--border);
-        transition: background 0.15s;
+        padding: 0.9rem 0;
+        border-bottom: 1px solid var(--rule);
       }
       .feature-item:last-child {
         border-bottom: none;
       }
-      .feature-item:hover {
-        background: #f8fafc;
-      }
-      .feature-num {
-        width: 28px;
-        height: 28px;
+      .feature-prio {
+        width: 6px;
+        height: 6px;
         border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 12px;
-        font-weight: 700;
         flex-shrink: 0;
-        margin-top: 2px;
+        margin-top: 0.55rem;
       }
-      .feature-content h4 {
-        font-size: 15px;
-        font-weight: 700;
-        margin-bottom: 4px;
+      .feature-content {
+        flex: 1;
       }
-      .feature-content p {
-        font-size: 13px;
-        color: var(--text-secondary);
+      .feature-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--ink);
+        margin-bottom: 0.2rem;
+      }
+      .feature-desc {
+        font-size: 0.82rem;
+        color: var(--ink-2);
         line-height: 1.6;
+        margin-bottom: 0.45rem;
       }
-      .badge {
-        display: inline-flex;
-        align-items: center;
-        padding: 3px 10px;
-        border-radius: 20px;
-        font-size: 11px;
-        font-weight: 700;
-        margin-top: 6px;
-      }
-      .badge-high {
-        background: #fee2e2;
-        color: #dc2626;
-      }
-      .badge-mid {
-        background: #fef3c7;
-        color: #d97706;
-      }
-      .badge-low {
-        background: #dcfce7;
-        color: #16a34a;
-      }
-
-      /* ── Target ── */
-      .target-card {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 24px;
+      .feature-tags {
+        display: flex;
+        gap: 0.4rem;
+        flex-wrap: wrap;
       }
 
       /* ── Risk ── */
       .risk-item {
         display: flex;
+        gap: 1rem;
         align-items: flex-start;
-        gap: 14px;
-        padding: 16px 0;
-        border-bottom: 1px solid var(--border);
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--rule);
       }
       .risk-item:last-child {
         border-bottom: none;
       }
-      .risk-badge {
+      .risk-sev {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.65rem;
+        font-weight: 700;
         flex-shrink: 0;
-        font-size: 11px;
-        font-weight: 700;
-        padding: 3px 9px;
-        border-radius: 20px;
-        margin-top: 2px;
-        letter-spacing: 0.3px;
       }
-      .risk-badge.high {
-        background: #fee2e2;
-        color: #b91c1c;
+      .risk-body {
+        flex: 1;
       }
-      .risk-badge.medium {
-        background: #fef3c7;
-        color: #92400e;
+      .risk-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+        color: var(--ink);
       }
-      .risk-content-title {
-        font-size: 14px;
-        font-weight: 700;
-        color: var(--text-primary);
-        margin-bottom: 4px;
-      }
-      .risk-content-desc {
-        font-size: 13px;
-        color: var(--text-secondary);
+      .risk-text {
+        font-size: 0.82rem;
+        color: var(--ink-2);
         line-height: 1.6;
+      }
+      .risk-mitigation {
+        margin-top: 0.55rem;
+        padding: 0.65rem 0.9rem;
+        background: var(--paper-2);
+        border-left: 3px solid var(--teal);
+        border-radius: 0 8px 8px 0;
+        font-size: 0.79rem;
+        color: var(--ink-2);
+        line-height: 1.6;
+      }
+      .risk-mitigation strong {
+        color: var(--ink);
+        font-weight: 600;
       }
 
-      /* ── Value props ── */
-      .value-cards {
+      /* ── Phase ── */
+      .phase-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 16px;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.75rem;
       }
-      .value-card {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 24px;
+      .phase-card {
+        background: var(--paper);
+        border: 1px solid var(--paper-3);
+        border-radius: 14px;
+        padding: 1.1rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
       }
-      .value-card-icon {
-        font-size: 32px;
-        margin-bottom: 12px;
+      .phase-top-bar {
+        height: 3px;
+        border-radius: 3px;
+        margin-bottom: 0.9rem;
       }
-      .value-card h4 {
-        font-size: 15px;
-        font-weight: 700;
-        margin-bottom: 8px;
+      .phase-period {
+        font-size: 0.7rem;
+        color: var(--ink-3);
+        margin-bottom: 0.3rem;
+        font-weight: 500;
       }
-      .value-card p {
-        font-size: 13px;
-        color: var(--text-secondary);
-        line-height: 1.6;
+      .phase-name {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 0.6rem;
+        color: var(--ink);
+      }
+      .phase-items {
+        list-style: none;
+      }
+      .phase-items li {
+        font-size: 0.78rem;
+        color: var(--ink-2);
+        line-height: 1.5;
+        padding: 0.25rem 0;
+        border-bottom: 1px solid var(--rule);
+      }
+      .phase-items li:last-child {
+        border-bottom: none;
+      }
+
+      /* ── Funnel ── */
+      .funnel {
+        display: flex;
+        align-items: stretch;
+        border: 1px solid var(--paper-3);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 1rem;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+      }
+      .funnel-step {
+        flex: 1;
+        padding: 0.9rem 0.6rem;
+        text-align: center;
+        background: var(--paper);
+        border-right: 1px solid var(--paper-3);
+      }
+      .funnel-step:last-child {
+        border-right: none;
+      }
+      .funnel-val {
+        font-size: 1.15rem;
+        font-weight: 600;
+      }
+      .funnel-name {
+        font-size: 0.72rem;
+        color: var(--ink-3);
+        margin-top: 0.2rem;
+        font-weight: 500;
+      }
+      .funnel-drop {
+        font-size: 0.68rem;
+        margin-top: 0.15rem;
+      }
+
+      /* ── Table ── */
+      .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.83rem;
+      }
+      .data-table th {
+        text-align: left;
+        padding: 0.6rem 0.75rem;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+        border-bottom: 1px solid var(--paper-3);
+        background: var(--paper-2);
+      }
+      .data-table th:first-child {
+        border-radius: 8px 0 0 0;
+      }
+      .data-table th:last-child {
+        border-radius: 0 8px 0 0;
+      }
+      .data-table td {
+        padding: 0.65rem 0.75rem;
+        border-bottom: 1px solid var(--rule);
+        color: var(--ink-2);
+        vertical-align: top;
+      }
+      .data-table tr:last-child td {
+        border-bottom: none;
+      }
+      .data-table td:first-child {
+        color: var(--ink);
+        font-weight: 600;
       }
 
       /* ── Divider ── */
       .divider {
         height: 1px;
-        background: var(--border);
-        margin: 48px 0;
+        background: var(--paper-3);
+        margin: 2rem 0;
       }
 
-      /* ── 현황 분석 ── */
-      .analysis-section-title {
-        font-size: 20px;
-        font-weight: 800;
-        color: var(--text-primary);
-        margin: 32px 0 6px;
-      }
-      .analysis-section-sub {
-        font-size: 13px;
-        color: var(--text-secondary);
-        margin-bottom: 20px;
-        line-height: 1.5;
-      }
-      .funnel-wrap {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        padding: 20px 24px;
-        margin-bottom: 12px;
-      }
-      .funnel-steps {
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      .funnel-step {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        min-width: 80px;
-      }
-      .funnel-pct {
-        font-size: 20px;
-        font-weight: 800;
-        color: var(--primary);
-      }
-      .funnel-pct.target {
-        color: var(--secondary);
-      }
-      .funnel-step-label {
-        font-size: 11px;
-        color: var(--text-secondary);
-        margin-top: 4px;
-        line-height: 1.4;
-        max-width: 76px;
-      }
-      .funnel-arrow {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 0 4px;
-        color: var(--text-hint);
-        font-size: 16px;
-        line-height: 1;
-      }
-      .funnel-arrow .drop {
-        font-size: 11px;
-        color: var(--error);
-        font-weight: 600;
-        margin-top: 2px;
-      }
-      .funnel-note {
-        font-size: 12px;
-        color: var(--text-secondary);
-        margin-top: 14px;
-        padding-top: 14px;
-        border-top: 1px solid var(--border);
-        line-height: 1.6;
-      }
-      /* ── 시나리오 카드 ── */
-      .scenario-card {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 20px;
-        overflow: hidden;
-        margin-bottom: 16px;
-      }
-      .scenario-header {
-        display: flex;
-        align-items: flex-start;
-        gap: 14px;
-        padding: 20px 24px 16px;
-        border-bottom: 1px solid var(--border);
-      }
-      .scenario-badge {
-        flex-shrink: 0;
-        width: 36px;
-        height: 36px;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 16px;
-        font-weight: 900;
-      }
-      .scenario-badge.a {
-        background: #fee2e2;
-        color: #b91c1c;
-      }
-      .scenario-badge.b {
-        background: #fef3c7;
-        color: #92400e;
-      }
-      .scenario-badge.c {
-        background: #f0fdf4;
-        color: #15803d;
-      }
-      .scenario-header-text h3 {
-        font-size: 16px;
-        font-weight: 800;
-        margin-bottom: 2px;
-      }
-      .scenario-header-text p {
-        font-size: 12px;
-        color: var(--text-secondary);
-      }
-      .scenario-body {
-        padding: 20px 24px;
-      }
-      .scenario-inline-stats {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-        margin-bottom: 16px;
-      }
-      .scenario-stat {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        min-width: 140px;
-        background: var(--bg);
-        border: 1px solid var(--border);
+      /* ── Highlight box ── */
+      .highlight {
+        background: var(--teal-light);
+        border: 1px solid rgba(0, 82, 255, 0.12);
         border-radius: 12px;
-        padding: 14px 18px;
+        padding: 0.9rem 1.1rem;
+        font-size: 0.84rem;
+        color: var(--teal);
+        line-height: 1.65;
+        margin-top: 0.9rem;
       }
-      .scenario-stat-value {
-        font-size: 22px;
-        font-weight: 800;
-        color: var(--error);
-        line-height: 1.1;
+      .highlight strong {
+        color: var(--teal);
+        font-weight: 600;
       }
-      .scenario-stat-label {
-        font-size: 11px;
-        color: var(--text-secondary);
-        margin-top: 3px;
-        line-height: 1.4;
-        max-width: 140px;
+
+      /* ── Callout ── */
+      .callout {
+        border-left: 3px solid var(--teal);
+        padding: 0.8rem 1.1rem;
+        background: var(--paper-2);
+        border-radius: 0 10px 10px 0;
+        font-size: 0.87rem;
+        color: var(--ink-2);
+        line-height: 1.7;
+        margin: 1rem 0;
       }
-      .cause-box {
-        background: #fffbeb;
-        border: 1px solid #fde68a;
-        border-radius: 10px;
-        padding: 14px 16px;
-        margin-bottom: 12px;
-      }
-      .cause-box-title {
-        font-size: 11px;
-        font-weight: 700;
-        color: #92400e;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-bottom: 6px;
-      }
-      .cause-box p {
-        font-size: 13px;
-        color: #78350f;
-        line-height: 1.6;
-      }
-      .user-quote {
-        display: flex;
-        align-items: flex-start;
-        gap: 8px;
-        font-size: 13px;
-        color: var(--text-secondary);
-        margin-bottom: 6px;
-        padding-left: 4px;
-        font-style: italic;
-        line-height: 1.6;
-      }
-      .user-quote::before {
-        content: "💬";
-        font-style: normal;
-        flex-shrink: 0;
-        margin-top: 1px;
-      }
-      .solution-box {
-        margin-top: 16px;
-        border-top: 1px solid var(--border);
-        padding-top: 16px;
-      }
-      .solution-box-title {
-        font-size: 12px;
-        font-weight: 700;
-        color: var(--primary);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-bottom: 10px;
-      }
-      .solution-item {
-        margin-bottom: 12px;
-      }
-      .solution-item h5 {
-        font-size: 13px;
-        font-weight: 700;
-        color: var(--text-primary);
-        margin-bottom: 3px;
-      }
-      .solution-item p {
-        font-size: 13px;
-        color: var(--text-secondary);
-        line-height: 1.6;
-      }
-      .validation-note {
-        font-size: 12px;
-        color: #1e40af;
-        background: #eff6ff;
-        border-radius: 8px;
-        padding: 10px 14px;
-        margin-top: 10px;
-        line-height: 1.6;
-      }
-      .before-after {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-top: 14px;
-        flex-wrap: wrap;
-      }
-      .ba-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background: var(--bg);
-        border-radius: 10px;
-        padding: 18px 32px;
-        flex: 1;
-      }
-      .ba-label {
-        font-size: 11px;
-        color: var(--text-secondary);
-        margin-bottom: 4px;
-      }
-      .ba-value {
-        font-size: 18px;
-        font-weight: 800;
-      }
-      .ba-value.before {
-        color: var(--error);
-      }
-      .ba-value.after {
-        color: var(--secondary);
-      }
-      .ba-arrow {
-        font-size: 20px;
-        color: var(--text-hint);
+      .callout strong {
+        color: var(--ink);
+        font-weight: 600;
       }
 
       /* ── Footer ── */
-      footer {
-        background: var(--text-primary);
-        color: white;
-        text-align: center;
-        padding: 32px;
-        font-size: 13px;
-        opacity: 0.9;
-      }
-      footer a {
-        color: #93c5fd;
-        text-decoration: none;
+      .doc-footer {
+        margin-top: 5rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--paper-3);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.75rem;
+        color: var(--ink-4);
+        font-weight: 500;
       }
 
-      /* ── Responsive ── */
-      @media (max-width: 600px) {
-        .header {
-          padding: 40px 16px 56px;
+      /* ── Print ── */
+      @media print {
+        body {
+          background: white;
         }
-        .header-meta {
-          flex-direction: column;
-          gap: 8px;
-          align-items: center;
+        .cover {
+          background: #0d1117 !important;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
         }
-        .kpi-grid {
-          grid-template-columns: repeat(2, 1fr);
+        .page {
+          padding: 1rem 2rem;
         }
       }
     </style>
   </head>
   <body>
-    <!-- ── Header ── -->
-    <div class="header">
-      <div class="container">
-        <div class="header-inner">
-          <div class="logo">
-            <div class="logo-icon">K</div>
-            <span class="logo-text">KONDA</span>
-          </div>
-          <h1>일정 계획 기능 PRD</h1>
-          <p style="opacity: 0.7; font-size: 15px; margin-top: 8px">
-            한국 여행 일정 계획 및 개인화 추천 서비스
-          </p>
-          <div class="header-meta">
-            <span>📅 2026년 4월</span>
-            <span>🎯 여행 상품 전환율 증가</span>
-            <span>👥 2030대 개인 여행객</span>
-          </div>
+    <div class="page">
+      <!-- Cover -->
+      <div class="cover">
+        <div class="cover-kicker">
+          <div class="cover-kicker-dot"></div>
+          KONDA · Product Requirements Document
+        </div>
+        <h1>KONDA<br /><em>일정 계획 기능</em></h1>
+        <p class="cover-sub">
+          사용자가 여행을 계획하는 과정을 KONDA 안으로 가져옴으로써, 맥락 없이
+          노출되던 상품 추천을 '지금 내 여행에 필요한 것'으로 전환하고 일일 평균
+          결제 횟수를 높이는 기능입니다.
+        </p>
+        <div class="cover-meta">
+          <span class="meta-pill">📅 2026년 4월</span>
+          <span class="meta-pill">🧭 v1.0 초안</span>
+          <span class="meta-pill">👥 타겟 · 2030대 개인 여행객</span>
+          <span class="meta-pill">🎯 북극성 지표 · 일일 평균 결제 횟수</span>
         </div>
       </div>
-    </div>
 
-    <div class="container">
-      <div class="content">
-        <!-- ── 개요 ── -->
-        <div class="section">
-          <h2 class="section-title">📄 제품 목표</h2>
-
-          <div class="goal-card">
-            <p>
-              사용자가 편리하게 한국 여행 일정을 계획하고, 계획 과정에서
-              개인화된 여행 상품 및 카드 추천을 통해 여행 상품 구매 및 신규 카드
-              발급으로 자연스럽게 이어지도록 유도하여 사용자의 서비스 내 결제
-              전환율 및 신규 카드 발급 수를 증가시키는 것을 목표로 합니다.
-            </p>
-          </div>
-          </div>
-
-          <!-- ── 현황 분석 ── -->
-            <div class="section">
-          <h2 class="section-title">📄 문제 정의 및 처방 (가설)</h2>
-          <p class="analysis-section-sub">
-            3가지 이탈 시나리오 분석과 일정 계획 기능의 해결 논거
-          </p>
-
-          <p
-            style="
-              font-size: 13px;
-              font-weight: 600;
-              color: var(--text-secondary);
-              margin-bottom: 10px;
-            "
-          >
-            전체 전환 현황
-          </p>
-          <div class="funnel-wrap">
-            <div class="funnel-steps">
-              <div class="funnel-step">
-                <div class="funnel-pct">100%</div>
-                <div class="funnel-step-label">앱 설치</div>
-              </div>
-              <div class="funnel-arrow">
-                ▶
-                <div class="drop">-62%</div>
-              </div>
-              <div class="funnel-step">
-                <div class="funnel-pct">38%</div>
-                <div class="funnel-step-label">첫 세션 유지</div>
-              </div>
-              <div class="funnel-arrow">
-                ▶
-                <div class="drop">-19pp</div>
-              </div>
-              <div class="funnel-step">
-                <div class="funnel-pct">19%</div>
-                <div class="funnel-step-label">상품 상세 조회</div>
-              </div>
-              <div class="funnel-arrow">
-                ▶
-                <div class="drop">-15pp</div>
-              </div>
-              <div class="funnel-step">
-                <div class="funnel-pct">4%</div>
-                <div class="funnel-step-label">장바구니</div>
-              </div>
-              <div class="funnel-arrow">
-                ▶
-                <div class="drop">-2.8pp</div>
-              </div>
-              <div class="funnel-step">
-                <div class="funnel-pct">1.2%</div>
-                <div class="funnel-step-label">최종 전환</div>
-              </div>
-              <div class="funnel-arrow">▶</div>
-              <div class="funnel-step">
-                <div class="funnel-pct target">3.5%</div>
-                <div class="funnel-step-label">목표</div>
-              </div>
-            </div>
-            <div class="funnel-note">
-              위 퍼널에서 이탈이 집중되는 구간이 각기 다릅니다. 단일 원인이
-              아니라 3가지 이질적 패턴이 동시에 작동하고 있다는 것이 핵심
-              가설입니다.
-            </div>
-          </div>
-          </div>
-
-          <p
-            style="
-              font-size: 13px;
-              font-weight: 600;
-              color: var(--text-secondary);
-              margin: 20px 0 12px;
-            "
-          >
-            시나리오 분석
-          </p>
-
-          <!-- 시나리오 A -->
-          <div class="scenario-card">
-            <div class="scenario-header">
-              <div class="scenario-badge a">A</div>
-              <div class="scenario-header-text">
-                <h3>즉시 이탈형</h3>
-                <p>
-                  설치 후 → 즉시 이탈 &nbsp;·&nbsp; 앱을 설치하자마자 기능도
-                  둘러보지 않고 이탈
-                </p>
-              </div>
-            </div>
-            <div class="scenario-body">
-              <div class="scenario-inline-stats">
-                <div class="scenario-stat">
-                  <div class="scenario-stat-label">추정 해당 사용자 비중</div>
-                  <div class="scenario-stat-value">~62%</div>
-                  <div class="scenario-stat-label">
-                    첫 세션 30초 내 이탈 (앱 설치 당일)
-                  </div>
-                </div>
-                <div class="scenario-stat">
-                  <div class="scenario-stat-label">첫 화면 평균 체류 시간</div>
-                  <div class="scenario-stat-value">8초</div>
-                  <div class="scenario-stat-label">
-                    온보딩 완료율 12% (업계 평균 34%)
-                  </div>
-                </div>
-              </div>
-              <div class="cause-box">
-                <div class="cause-box-title">근본 원인</div>
-                <p>
-                  앱 진입 직후 "이 앱이 나에게 왜 필요한가"를 즉각적으로
-                  납득시키지 못함. 현재 홈 화면은 카드 상품 나열이 중심으로,
-                  사용자의 현재 문제(여행 계획)와 연결고리가 없음.
-                </p>
-              </div>
-              <div class="user-quote">
-                사용자 관점: "이 앱이 카드 소개 앱인데, 내게 필요한 게 없을 것
-                같습니다, 지금 당장 필요한 게 없어" → 이탈
-              </div>
-              <div class="solution-box">
-                <div class="solution-box-title">일정 기능의 해결 방식</div>
-                <div class="solution-item">
-                  <h5>진입 즉시 '여행 일정 만들기' CTA 노출</h5>
-                  <p>
-                    진입 즉시 "여행 일정 만들기" CTA 노출. 카드 소개보다 먼저
-                    일정 계획 기능을 진입점으로. "오늘 어디 갈지 계획해보세요"는
-                    현재 맥락과 즉시 연결됨.
-                  </p>
-                </div>
-                <div class="solution-item">
-                  <h5>온보딩 단계 축소 (5단계 → 2단계)</h5>
-                  <p>
-                    목적지 + 날짜 2개 입력만으로 즉시 추천 결과 노출. 긴
-                    회원가입 없이 가치 경험 선행.
-                  </p>
-                </div>
-                <div class="before-after">
-                  <div class="ba-item">
-                    <div class="ba-label">현재 온보딩 완료율</div>
-                    <div class="ba-value before">12%</div>
-                  </div>
-                  <div class="ba-arrow">→</div>
-                  <div class="ba-item">
-                    <div class="ba-label">목표 온보딩 완료율</div>
-                    <div class="ba-value after">40%</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 시나리오 B -->
-          <div class="scenario-card">
-            <div class="scenario-header">
-              <div class="scenario-badge b">B</div>
-              <div class="scenario-header-text">
-                <h3>탐색 후 이탈형</h3>
-                <p>
-                  상품 조회 → 구매 미전환 &nbsp;·&nbsp; 제품이나 카드 설명까지는
-                  보지만 실제 구매·발급으로 이어지지 않음
-                </p>
-              </div>
-            </div>
-            <div class="scenario-body">
-              <div class="scenario-inline-stats">
-                <div class="scenario-stat">
-                  <div class="scenario-stat-label">상품 조회 후 이탈율</div>
-                  <div class="scenario-stat-value">78%</div>
-                  <div class="scenario-stat-label">
-                    상세 페이지 진입 후 장바구니 미추가
-                  </div>
-                </div>
-                <div class="scenario-stat">
-                  <div class="scenario-stat-label">
-                    이탈 직전 평균 체류 시간
-                  </div>
-                  <div class="scenario-stat-value">2.3분</div>
-                  <div class="scenario-stat-label">
-                    충분히 읽었으나 행동 유발 실패
-                  </div>
-                </div>
-              </div>
-              <div class="cause-box">
-                <div class="cause-box-title">근본 원인 가설</div>
-                <p>
-                  상품 정보는 이해했지만 "지금 이게 나한테 필요한 이유"가 없음.
-                  맥락 없이 노출된 숙소·체험 상품은 막연하게 느껴지고, 카드
-                  혜택도 당장 쓸 여행이 없으면 발급 동기가 생기지 않음.
-                </p>
-              </div>
-              <div class="user-quote">
-                "이 숙소가 좋긴 한데... 내가 언제 가는 여행에 맞는 건지
-                모르겠음" → 이탈
-              </div>
-              <div class="user-quote">
-                "이 카드 혜택이 좋다는 건 알겠는데 지금 당장 쓸 일이 없음" →
-                이탈
-              </div>
-              <div class="solution-box">
-                <div class="solution-box-title">일정 기능의 해결 방식</div>
-                <div class="solution-item">
-                  <h5>구매 맥락 생성 — "당신의 3일 일정에 맞는 숙소"</h5>
-                  <p>
-                    막연한 상품 목록이 아니라 사용자가 직접 만든 일정 맥락
-                    위에서 "2박 · 서울 · 5월 3일"에 딱 맞는 숙소로 추천. 구매
-                    이유가 명확해짐.
-                  </p>
-                </div>
-                <div class="solution-item">
-                  <h5>카드 혜택을 "이 여행에서 절약 가능 금액"으로 구체화</h5>
-                  <p>
-                    예) "계획한 일정에 KONDA 트래블 카드 사용 시 예상 절약 금액
-                    ₩42,000". 추상적 혜택을 현재 여행 계획에 붙여 즉시 발급 동기
-                    생성.
-                  </p>
-                </div>
-                <div class="validation-note">
-                  유사 서비스 검증 데이터 — 마이리얼트립 · 트리플 공개 IR: 일정
-                  맥락 내 상품 노출 시 동일 상품 단독 노출 대비 구매 전환율 평균
-                  2.1배 향상.
-                </div>
-                <div class="before-after">
-                  <div class="ba-item">
-                    <div class="ba-label">현재 상품 전환율</div>
-                    <div class="ba-value before">1.2%</div>
-                  </div>
-                  <div class="ba-arrow">→</div>
-                  <div class="ba-item">
-                    <div class="ba-label">맥락 내 추천 목표</div>
-                    <div class="ba-value after">3.5%</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 시나리오 C -->
-          <div class="scenario-card">
-            <div class="scenario-header">
-              <div class="scenario-badge c">C</div>
-              <div class="scenario-header-text">
-                <h3>저체류 전환형</h3>
-                <p>
-                  결제 완료 → 앱 이탈 &nbsp;·&nbsp; 결제·구매는 하지만 앱 체류
-                  시간이 극히 짧고 재방문이 없음
-                </p>
-              </div>
-            </div>
-            <div class="scenario-body">
-              <div class="scenario-inline-stats">
-                <div class="scenario-stat">
-                  <div class="scenario-stat-label">
-                    전환 사용자 평균 세션 시간
-                  </div>
-                  <div class="scenario-stat-value">1.9분</div>
-                  <div class="scenario-stat-label">구매 후 즉시 이탈 패턴</div>
-                </div>
-                <div class="scenario-stat">
-                  <div class="scenario-stat-label">7일 내 재방문율</div>
-                  <div class="scenario-stat-value">22%</div>
-                  <div class="scenario-stat-label">
-                    목표 40% 대비 현저히 낮음
-                  </div>
-                </div>
-              </div>
-              <div class="cause-box">
-                <div class="cause-box-title">근본 원인 가설</div>
-                <p>
-                  KONDA가 현재 사용자에게 "예약 완료 후에도 계속 돌아올 이유"를
-                  제공하지 못함. 앱이 단순 예약 채널로만 인식되고 있으며, 여행
-                  전-중-후의 동반자 역할을 하지 못함.
-                </p>
-              </div>
-              <div class="user-quote">
-                "예약 완료됐으니 이제 다른 앱에서 나머지 계획하면 됨" → 네이버
-                지도, 구글맵으로 이동
-              </div>
-              <div class="solution-box">
-                <div class="solution-box-title">일정 기능의 해결 방식</div>
-                <div class="solution-item">
-                  <h5>재방문 고리 생성 — 예약 완료 후 자동으로 일정에 추가</h5>
-                  <p>
-                    숙소 예약 시 KONDA 일정에 자동 등록. 이후 "일정 완성하기"
-                    푸시 → 주변 장소 추천 → 추가 상품 탐색으로 자연스럽게
-                    재진입.
-                  </p>
-                </div>
-                <div class="solution-item">
-                  <h5>여행 D-7, D-1, D-day 리마인더 + 추가 추천</h5>
-                  <p>
-                    예약 후에도 체류할 이유를 시간 기반으로 설계. D-7 교통편
-                    추천, D-1 날씨 기반 옷차림 팁, D-day 실시간 주변 맛집 노출.
-                  </p>
-                </div>
-                <div class="solution-item">
-                  <h5>일정 공유로 비사용자 바이럴 유입</h5>
-                  <p>
-                    일정 공유 링크 → 비회원 일정 조회 → 회원가입 유도. k-factor
-                    목표 1.3으로 유기적 MAU 성장.
-                  </p>
-                </div>
-                <div class="before-after">
-                  <div class="ba-item">
-                    <div class="ba-label">현재 7일 재방문율</div>
-                    <div class="ba-value before">22%</div>
-                  </div>
-                  <div class="ba-arrow">→</div>
-                  <div class="ba-item">
-                    <div class="ba-label">목표 7일 재방문율</div>
-                    <div class="ba-value after">40%</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ── 북극성 지표 ── -->
-        <div class="section">
-          <h2 class="section-title">⭐ 북극성 지표</h2>
-          <p style="font-size:13px; color:var(--text-secondary); margin-bottom:20px;">일정 기획 기능이 북극성 지표에 미치는 영향 · 세부 지표 분해 및 인과 논거</p>
-
-          <!-- NSM 정의 -->
-          <div style="background: linear-gradient(135deg, #f5f3ff, #eff6ff); border: 1px solid #ddd6fe; border-radius: 16px; padding: 28px; margin-bottom: 24px;">
-            <div style="font-size: 12px; font-weight: 700; color: #7c3aed; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">North Star Metric</div>
-            <div style="font-size: 20px; font-weight: 800; color: var(--text-primary); margin-bottom: 8px;">"사용자가 KONDA로 발생시키는 일일 평균 결제 횟수"</div>
-            <div style="font-size: 13px; color: var(--text-secondary);">Daily Transactions per Active User &nbsp;·&nbsp; 서비스 핵심 가치와 수익이 동시에 반영</div>
-          </div>
-
-          <!-- 지표 분해 구조 -->
-          <div class="card" style="margin-bottom: 24px;">
-            <div style="font-size: 13px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 14px;">지표 분해 구조</div>
-            <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 12px;">
-              <span style="background: #f5f3ff; color: #7c3aed; padding: 6px 14px; border-radius: 8px;">일일 평균 결제 횟수</span>
-              <span style="color: var(--text-hint);">=</span>
-              <span style="background: #eff6ff; color: #2563eb; padding: 6px 14px; border-radius: 8px;">결제 활성 사용자 수</span>
-              <span style="color: var(--text-hint);">×</span>
-              <span style="background: #fff7ed; color: #ea580c; padding: 6px 14px; border-radius: 8px;">사용자당 결제 빈도</span>
-              <span style="color: var(--text-hint);">×</span>
-              <span style="background: #f0fdf4; color: #16a34a; padding: 6px 14px; border-radius: 8px;">세션당 결제 전환율</span>
-            </div>
-            <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.7;">세 변수 중 <strong>결제 빈도</strong>와 <strong>전환율</strong> 두 곳에 일정 기획 기능이 가장 크게 기여합니다.</p>
-          </div>
-
-          <!-- 세부 지표 1: 결제 빈도 -->
-          <div class="feature-group" style="margin-bottom: 20px;">
-            <div class="feature-group-header">
-              <div class="feature-icon" style="background: #fff7ed;">💳</div>
-              <div>
-                <h3>결제 빈도 (Transactions per User)</h3>
-                <p>한 사용자가 한 달 동안 KONDA에서 결제하는 횟수. 현재 평균 월 1.3회 → 목표 3.0회</p>
-                <span class="badge badge-high" style="margin-top: 8px;">가장 큰 기대 효과</span>
-              </div>
-            </div>
-            <div style="padding: 20px 24px;">
-              <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
-                <div style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
-                  <span style="color: #ea580c; font-weight: 700; flex-shrink: 0; margin-top: 1px;">①</span>
-                  <p>여행 계획 자체가 복수 결제를 유도하는 구조를 만듭니다. 숙소 1건 예약에 그치던 사용자가 일정 기능 안에서 "이 날은 교통편도 필요하고, 이 체험도 예약해야지"로 자연스럽게 복수 결제로 이어집니다.</p>
-                </div>
-                <div style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
-                  <span style="color: #ea580c; font-weight: 700; flex-shrink: 0; margin-top: 1px;">②</span>
-                  <p>일정이 미완성일 때마다 재방문 동기가 생깁니다. "서울 3박 일정"을 저장해 둔 사용자는 D-7, D-3 시점에 KONDA로 돌아와 남은 예약을 채우려 합니다. 매 재방문이 추가 결제 기회입니다.</p>
-                </div>
-                <div style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
-                  <span style="color: #ea580c; font-weight: 700; flex-shrink: 0; margin-top: 1px;">③</span>
-                  <p>카드 혜택 시뮬레이션이 KONDA 내 결제를 집중시킵니다. "이 여행에서 KONDA 카드로 결제 시 ₩42,000 절약"을 확인한 사용자는 타 플랫폼이 아닌 KONDA 내에서 결제를 완결하려는 동기가 생깁니다.</p>
-                </div>
-              </div>
-              <div class="before-after">
-                <div class="ba-item">
-                  <div class="ba-label">현재 월 평균 결제 횟수</div>
-                  <div class="ba-value before">1.3회</div>
-                </div>
-                <div class="ba-arrow">→</div>
-                <div class="ba-item">
-                  <div class="ba-label">목표 월 평균 결제 횟수</div>
-                  <div class="ba-value after">3.0회</div>
-                </div>
-                <div class="ba-item">
-                  <div class="ba-label">기대 증가</div>
-                  <div class="ba-value" style="color: var(--purple);">+131%</div>
-                </div>
-              </div>
-              <div class="validation-note" style="margin-top: 12px;">유사 사례: 트리플·마이리얼트립, 일정 기능 도입 후 사용자당 월 결제 건수 평균 2.1배 증가 (2024 IR 기준)</div>
-            </div>
-          </div>
-
-          <!-- 세부 지표 2: 세션당 결제 전환율 -->
-          <div class="feature-group" style="margin-bottom: 20px;">
-            <div class="feature-group-header">
-              <div class="feature-icon" style="background: #f0fdf4;">📈</div>
-              <div>
-                <h3>세션당 결제 전환율 (Session-to-Purchase CVR)</h3>
-                <p>앱을 열었을 때 결제로 마무리되는 비율. 현재 1.2% → 목표 3.5%</p>
-                <span class="badge badge-high" style="margin-top: 8px;">두 번째 핵심 효과</span>
-              </div>
-            </div>
-            <div style="padding: 20px 24px;">
-              <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
-                <div style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
-                  <span style="color: #16a34a; font-weight: 700; flex-shrink: 0; margin-top: 1px;">①</span>
-                  <p>맥락이 없으면 상품은 추상적입니다. "제주 숙소 추천" 목록은 여행 날짜가 없는 사용자에게 구매 이유를 주지 못합니다. 일정 위에서 "내 5월 3일 제주 2박"에 맞춰 뜨는 숙소는 즉시 구매 이유가 됩니다.</p>
-                </div>
-                <div style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
-                  <span style="color: #16a34a; font-weight: 700; flex-shrink: 0; margin-top: 1px;">②</span>
-                  <p>장소 상세 팝업이 상품 CTA의 가장 효과적인 삽입 지점입니다. 사용자가 지도에서 "경복궁"을 누르는 행위는 관심 의도가 명확한 순간입니다. 이 팝업 안에 "근처 숙소 예약", "이 날짜 체험 상품" CTA가 들어오면 전환 의도 직후 즉시 연결됩니다.</p>
-                </div>
-                <div style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
-                  <span style="color: #16a34a; font-weight: 700; flex-shrink: 0; margin-top: 1px;">③</span>
-                  <p>리뷰 보유 장소의 전환율 데이터가 이미 있습니다. 내부 데이터 기준, 리뷰가 붙은 상품의 결제 전환율은 리뷰 없는 상품 대비 +41%. 일정 기능은 기존 리뷰 자산을 장소 탐색 맥락에 자연스럽게 연결합니다.</p>
-                </div>
-              </div>
-              <div class="before-after">
-                <div class="ba-item">
-                  <div class="ba-label">현재 CVR</div>
-                  <div class="ba-value before">1.2%</div>
-                </div>
-                <div class="ba-arrow">→</div>
-                <div class="ba-item">
-                  <div class="ba-label">목표 CVR</div>
-                  <div class="ba-value after">3.5%</div>
-                </div>
-                <div class="ba-item">
-                  <div class="ba-label">기대 증가</div>
-                  <div class="ba-value" style="color: var(--purple);">+192%</div>
-                </div>
-              </div>
-              <div class="validation-note" style="margin-top: 12px;">이유: 상품 탐색이 "검색"이 아닌 "내 일정 채우기"로 전환될 때 구매 의도가 명확해지며 이탈 이유가 사라집니다.</div>
-            </div>
-          </div>
-
-          <!-- 세부 지표 3: 결제 활성 사용자 수 -->
-          <div class="feature-group" style="margin-bottom: 20px;">
-            <div class="feature-group-header">
-              <div class="feature-icon" style="background: #eff6ff;">👥</div>
-              <div>
-                <h3>결제 활성 사용자 수 (Paying MAU)</h3>
-                <p>월 1회 이상 결제한 사용자 수. 결제 빈도·전환율 개선 이후 자연 증가 예상</p>
-                <span class="badge badge-mid" style="margin-top: 8px;">간접 기여</span>
-              </div>
-            </div>
-            <div style="padding: 20px 24px;">
-              <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
-                <div style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
-                  <span style="color: #2563eb; font-weight: 700; flex-shrink: 0; margin-top: 1px;">①</span>
-                  <p>일정 공유 기능이 비결제 사용자를 유입시킵니다. 친구가 공유한 일정 링크를 클릭한 비회원은 "이 여행 일정 저장하기" 진입점을 통해 회원가입하고, 저장된 일정 위에서 첫 결제로 전환됩니다.</p>
-                </div>
-                <div style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
-                  <span style="color: #2563eb; font-weight: 700; flex-shrink: 0; margin-top: 1px;">②</span>
-                  <p>온보딩 완료율 개선이 모수 자체를 키웁니다. 현재 12%에 그치는 온보딩 완료율이 일정 기능(목적지 + 날짜 2단계 진입)으로 40%까지 개선되면, 결제를 경험할 수 있는 사용자 풀이 약 3배 증가합니다.</p>
-                </div>
-              </div>
-              <div class="before-after">
-                <div class="ba-item">
-                  <div class="ba-label">현재 온보딩 완료율</div>
-                  <div class="ba-value before">12%</div>
-                </div>
-                <div class="ba-arrow">→</div>
-                <div class="ba-item">
-                  <div class="ba-label">목표 온보딩 완료율</div>
-                  <div class="ba-value after">40%</div>
-                </div>
-                <div class="ba-item">
-                  <div class="ba-label">모수 증가</div>
-                  <div class="ba-value" style="color: var(--purple);">+233%</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ── 핵심 가치 ── -->
-        <div class="section">
-          <h2 class="section-title">⭐️ 핵심 가치</h2>
-          <div class="value-cards">
-            <div class="value-card">
-              <div class="value-card-icon">🔍</div>
-              <h4>사용자 문제</h4>
-              <p>
-                여행 일정을 계획할 때 숙소 및 액티비티 예약에 어려움을 겪으며,
-                서비스 내 여행 관련 콘텐츠에 관심을 보이지만 실제 여행 상품
-                구매나 카드 발급과 같은 전환으로 이어지지 않는 구조적 문제가
-                있습니다.
-              </p>
-            </div>
-            <div class="value-card">
-              <div class="value-card-icon">⚙️</div>
-              <h4>해결 방식</h4>
-              <p>
-                한국 여행 일정 계획 기능을 제공하여 사용자가 쉽고 효율적으로
-                여행 계획을 수립할 수 있도록 돕습니다. 일정 계획 과정에서
-                사용자의 맥락과 선호도에 기반한 맞춤형 여행 상품 및 카드 정보를
-                자연스럽게 추천합니다.
-              </p>
-            </div>
-            <div class="value-card">
-              <div class="value-card-icon">✨</div>
-              <h4>차별점</h4>
-              <p>
-                단순한 일정 계획 기능을 넘어, 사용자가 설정한 예산과 여행 일정에
-                최적화된 여행 상품 및 금융(카드) 상품을 맥락 기반으로 추천하여
-                개인 맞춤형 여행 계획과 스마트한 소비를 동시에 지원하는 점이
-                핵심적인 차별점입니다.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- ── 타겟 및 시나리오 ── -->
-        <div class="section">
-          <h2 class="section-title">👥 타겟 및 시나리오</h2>
-          <div class="card-grid">
-            <div class="target-card">
-              <div style="font-size: 32px; margin-bottom: 12px">🎒</div>
-              <h4
-                style="font-size: 16px; font-weight: 700; margin-bottom: 10px"
-              >
-                타겟 사용자
-              </h4>
-              <p
-                style="
-                  font-size: 14px;
-                  color: var(--text-secondary);
-                  line-height: 1.7;
-                "
-              >
-                2030대 개인 여행객 및 유연한 계획을 선호하는 배낭여행객. 이들은
-                스마트폰을 통한 정보 탐색과 계획 수립에 익숙하며, 여행 경비를
-                효율적으로 관리하고 자신만의 특별한 경험을 추구하는 경향이
-                있습니다. 특히 한국 여행에 대한 관심이 높고, 여행 계획 수립
-                과정에서 추천 정보와 편리한 예약 기능을 선호합니다.
-              </p>
-              <div
-                style="
-                  display: flex;
-                  gap: 8px;
-                  flex-wrap: wrap;
-                  margin-top: 14px;
-                "
-              >
-                <span
-                  style="
-                    background: #eff6ff;
-                    color: #2563eb;
-                    padding: 4px 12px;
-                    border-radius: 20px;
-                    font-size: 12px;
-                    font-weight: 600;
-                  "
-                  >20대</span
-                >
-                <span
-                  style="
-                    background: #eff6ff;
-                    color: #2563eb;
-                    padding: 4px 12px;
-                    border-radius: 20px;
-                    font-size: 12px;
-                    font-weight: 600;
-                  "
-                  >30대</span
-                >
-                <span
-                  style="
-                    background: #f5f3ff;
-                    color: #7c3aed;
-                    padding: 4px 12px;
-                    border-radius: 20px;
-                    font-size: 12px;
-                    font-weight: 600;
-                  "
-                  >개인 여행</span
-                >
-                <span
-                  style="
-                    background: #f5f3ff;
-                    color: #7c3aed;
-                    padding: 4px 12px;
-                    border-radius: 20px;
-                    font-size: 12px;
-                    font-weight: 600;
-                  "
-                  >배낭여행</span
-                >
-              </div>
-            </div>
-            <div class="target-card">
-              <div style="font-size: 32px; margin-bottom: 12px">🗺️</div>
-              <h4
-                style="font-size: 16px; font-weight: 700; margin-bottom: 10px"
-              >
-                사용 시나리오
-              </h4>
-              <p
-                style="
-                  font-size: 14px;
-                  color: var(--text-secondary);
-                  line-height: 1.7;
-                "
-              >
-                여행을 계획 중인 사용자가 한국 내 특정 목적지(예: 서울)와 여행
-                기간을 선택합니다. 시스템은 선택된 정보에 기반하여 해당 지역의
-                추천 장소와 액티비티를 제안하고, 사용자는 이를 바탕으로 자신만의
-                일정을 자유롭게 추가하고 수정합니다. 일정 계획 중 시스템은
-                사용자의 예산과 선호도에 맞춰 숙소, 교통편, 체험 상품 등 맞춤형
-                여행 상품과 혜택이 좋은 카드를 추천하며, 사용자는 이를 통해
-                원스톱으로 여행 준비를 완료합니다.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- ── 성공 지표 ── -->
-        <div class="section">
-          <h2 class="section-title">🎯 성공 지표</h2>
-          <div class="kpi-grid">
-            <div class="kpi-item">
-              <div class="kpi-icon">👤</div>
-              <div class="kpi-label">월간 활성 사용자 수<br />(MAU)</div>
-            </div>
-            <div class="kpi-item">
-              <div class="kpi-icon">📅</div>
-              <div class="kpi-label">일정 계획 기능<br />이용률</div>
-            </div>
-            <div class="kpi-item">
-              <div class="kpi-icon">🛍️</div>
-              <div class="kpi-label">
-                여행 상품 전환율<br />(조회수 대비 구매 완료율)
-              </div>
-            </div>
-            <div class="kpi-item">
-              <div class="kpi-icon">💳</div>
-              <div class="kpi-label">
-                신규 카드 발급 전환율<br />(클릭 수 대비 발급 완료율)
-              </div>
-            </div>
-            <div class="kpi-item">
-              <div class="kpi-icon">⏱️</div>
-              <div class="kpi-label">사용자 세션당<br />체류 시간</div>
-            </div>
-            <div class="kpi-item">
-              <div class="kpi-icon">🔄</div>
-              <div class="kpi-label">재방문율</div>
-            </div>
-          </div>
-
-          <div style="margin-top: 20px">
-            <div class="card" style="border-left: 4px solid var(--error)">
-              <h4
-                style="
-                  font-size: 14px;
-                  font-weight: 700;
-                  color: var(--error);
-                  margin-bottom: 14px;
-                "
-              >
-                ⚠️ 리스크 및 완화 방안
-              </h4>
-              <div class="risk-item">
-                <span class="risk-badge high">High</span>
-                <div>
-                  <div class="risk-content-title">
-                    추천 알고리즘 정확도 부족
-                  </div>
-                  <div class="risk-content-desc">
-                    관련성 낮은 추천은 이탈률 증가로 직결. <br /><strong
-                      >완화:</strong
-                    >
-                    출시 초기 규칙 기반(Rule-based) 추천으로 시작, CTR 35% 달성
-                    후 ML 모델 전환. 추천 만족도 NPS 주 단위 모니터링.
-                  </div>
-                </div>
-              </div>
-              <div class="risk-item">
-                <span class="risk-badge high">High</span>
-                <div>
-                  <div class="risk-content-title">
-                    복잡한 UX로 인한 이탈 증가
-                  </div>
-                  <div class="risk-content-desc">
-                    기능 과부하 시 오히려 전환율 저하 가능. <br /><strong
-                      >완화:</strong
-                    >
-                    최소 기능(MVP) 출시 후 A/B 테스트로 기능 단계적 추가. 온보딩
-                    완료율 70% 기준 미달 시 UI 개편.
-                  </div>
-                </div>
-              </div>
-              <div class="risk-item">
-                <span class="risk-badge medium">Medium</span>
-                <div>
-                  <div class="risk-content-title">경쟁 서비스 기능 우위</div>
-                  <div class="risk-content-desc">
-                    트리플·야놀자 등 기능 성숙도 높음. <br /><strong
-                      >완화:</strong
-                    >
-                    KONDA 카드 혜택 연동이라는 독점 차별점에 집중. 금융 데이터
-                    기반 맞춤 추천으로 차별화.
-                  </div>
-                </div>
-              </div>
-              <div class="risk-item">
-                <span class="risk-badge medium">Medium</span>
-                <div>
-                  <div class="risk-content-title">
-                    개인정보 보호 및 데이터 보안
-                  </div>
-                  <div class="risk-content-desc">
-                    여행 패턴·금융 선호 데이터 처리 민감도 높음. <br /><strong
-                      >완화:</strong
-                    >
-                    개인정보 수집 최소화 원칙(Privacy by Design), 법무 검토 출시
-                    전 완료, 데이터 처리 동의 UX 명확화.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="divider"></div>
-
-        <!-- ── 기능 명세서 ── -->
-        <div class="section">
-          <h2 class="section-title">📋 기능 명세서</h2>
-
-          <!-- 1. 여행 일정 생성 및 관리 -->
-          <div class="feature-group">
-            <div class="feature-group-header">
-              <div class="feature-icon" style="background: #eff6ff">🗓️</div>
-              <div>
-                <h3>여행 일정 생성 및 관리</h3>
-                <p>
-                  사용자는 여행 예정지와 기간을 선택하여 새로운 여행 일정을
-                  생성하고, 각 일차별로 방문할 장소를 추가, 수정, 삭제하며
-                  순서를 변경할 수 있습니다.
-                </p>
-              </div>
-            </div>
-            <div class="feature-list">
-              <div class="feature-item">
-                <div
-                  class="feature-num"
-                  style="background: #dbeafe; color: #2563eb"
-                >
-                  1
-                </div>
-                <div class="feature-content">
-                  <h4>여행 일정 시작지점 설정</h4>
-                  <p>
-                    사용자가 여행 일정 생성 시 출발지 또는 기본 숙소 위치를
-                    설정할 수 있어, 일정 짜기에 참고가 되도록 합니다.
-                  </p>
-                  <span class="badge badge-mid">중간</span>
-                </div>
-              </div>
-              <div class="feature-item">
-                <div
-                  class="feature-num"
-                  style="background: #dbeafe; color: #2563eb"
-                >
-                  2
-                </div>
-                <div class="feature-content">
-                  <h4>일정별 예상 소요 시간 및 이동 거리 표시</h4>
-                  <p>
-                    각 일차별 방문 장소 간 예상 소요 시간과 이동 거리를 자동
-                    계산하여 표시함으로써 현실적인 일정 계획을 지원합니다.
-                  </p>
-                  <span class="badge badge-high">높음</span>
-                </div>
-              </div>
-              <div class="feature-item">
-                <div
-                  class="feature-num"
-                  style="background: #dbeafe; color: #2563eb"
-                >
-                  3
-                </div>
-                <div class="feature-content">
-                  <h4>일차별 교통편 추천 기능</h4>
-                  <p>
-                    사용자가 일정에 추가한 장소를 기반으로 대중교통, 택시,
-                    자가용 등 최적의 교통편을 추천하여 이동 계획을 세우기 쉽게
-                    합니다.
-                  </p>
-                  <span class="badge badge-mid">중간</span>
-                </div>
-              </div>
-              <div class="feature-item">
-                <div
-                  class="feature-num"
-                  style="background: #dbeafe; color: #2563eb"
-                >
-                  4
-                </div>
-                <div class="feature-content">
-                  <h4>일정 공유 및 협업 기능</h4>
-                  <p>
-                    사용자가 계획한 여행 일정을 친구나 가족과 공유하고, 공유
-                    받은 사용자와 공동으로 일정을 수정하거나 의견을 교환할 수
-                    있도록 지원합니다.
-                  </p>
-                  <span class="badge badge-mid">중간</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 2. 지도 기반 일정 시각화 및 탐색 -->
-          <div class="feature-group">
-            <div class="feature-group-header">
-              <div class="feature-icon" style="background: #f5f3ff">🗺️</div>
-              <div>
-                <h3>지도 기반 일정 시각화 및 탐색</h3>
-                <p>
-                  사용자는 계획된 여행 일정을 네이버 지도를 통해 시각적으로
-                  확인하고, 지도 위에서 각 일정의 위치와 경로를 직관적으로
-                  파악할 수 있어야 합니다.
-                </p>
-              </div>
-            </div>
-            <div class="feature-list">
-              <div class="feature-item">
-                <div
-                  class="feature-num"
-                  style="background: #f5f3ff; color: #7c3aed"
-                >
-                  1
-                </div>
-                <div class="feature-content">
-                  <h4>지도 내 경로 최적화 기능</h4>
-                  <p>
-                    일정 내 방문 장소들의 위치를 기반으로 최적 경로를 자동
-                    계산하여 지도에 시각화하고, 예상 이동 시간과 거리를 함께
-                    제공함으로써 효율적인 여행 일정 구성을 돕습니다.
-                  </p>
-                  <span class="badge badge-high">높음</span>
-                </div>
-              </div>
-              <div class="feature-item">
-                <div
-                  class="feature-num"
-                  style="background: #f5f3ff; color: #7c3aed"
-                >
-                  2
-                </div>
-                <div class="feature-content">
-                  <h4>지도 위 일정 마커 클러스터링</h4>
-                  <p>
-                    지도에 여러 일정 장소가 밀집해 있을 경우 마커를 군집화하여
-                    지도 가독성을 높이고, 확대 시 개별 마커로 세분화하여 상세
-                    위치 파악을 용이하게 합니다.
-                  </p>
-                  <span class="badge badge-mid">중간</span>
-                </div>
-              </div>
-              <div class="feature-item">
-                <div
-                  class="feature-num"
-                  style="background: #f5f3ff; color: #7c3aed"
-                >
-                  3
-                </div>
-                <div class="feature-content">
-                  <h4>지도 내 장소 상세 팝업 제공</h4>
-                  <p>
-                    지도에서 각 마커를 클릭했을 때 장소의 대표 이미지, 간단한
-                    소개, 운영 시간, 전화번호 등의 상세 정보를 팝업으로 보여주어
-                    쉽게 정보를 확인할 수 있도록 합니다.
-                  </p>
-                  <span class="badge badge-high">높음</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 3. 장소 추천 및 검색 -->
-          <div class="feature-group">
-            <div class="feature-group-header">
-              <div class="feature-icon" style="background: #ffebfe">🔎</div>
-              <div>
-                <h3>장소 추천 및 검색</h3>
-                <p>
-                  사용자는 여행 예정지에 대한 추천 장소 리스트를 제공받고,
-                  키워드 검색을 통해 원하는 장소를 찾아 일정에 추가할 수
-                  있습니다.
-                </p>
-              </div>
-            </div>
-            <div class="feature-list">
-              <div class="feature-item">
-                <div
-                  class="feature-num"
-                  style="background: #ffebfe; color: #d9418c"
-                >
-                  1
-                </div>
-                <div class="feature-content">
-                  <h4>맞춤 장소 추천 필터링</h4>
-                  <p>
-                    사용자가 여행 기간, 관심사, 예산 등을 입력하면 이에 맞춰
-                    추천 장소 리스트를 필터링하여 개인화된 추천 결과를
-                    제공합니다.
-                  </p>
-                  <span class="badge badge-high">높음</span>
-                </div>
-              </div>
-              <div class="feature-item">
-                <div
-                  class="feature-num"
-                  style="background: #ffebfe; color: #d9418c"
-                >
-                  2
-                </div>
-                <div class="feature-content">
-                  <h4>장소 즐겨찾기 및 삭제 기능</h4>
-                  <p>
-                    사용자가 추천 장소나 검색한 장소를 즐겨찾기에 추가하거나
-                    불필요한 장소를 목록에서 삭제할 수 있어 일정 관리가
-                    용이하도록 지원합니다.
-                  </p>
-                  <span class="badge badge-high">높음</span>
-                </div>
-              </div>
-              <div class="feature-item">
-                <div
-                  class="feature-num"
-                  style="background: #ffebfe; color: #d9418c"
-                >
-                  3
-                </div>
-                <div class="feature-content">
-                  <h4>장소별 사용자 리뷰 및 평점 확인</h4>
-                  <p>
-                    추천 및 검색된 장소마다 다른 사용자들의 리뷰와 평점을 확인할
-                    수 있어 신뢰도 높은 장소 선택을 돕습니다.
-                  </p>
-                  <span class="badge badge-high">높음</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 4. 맥락 기반 여행 상품 및 카드 추천 -->
-          <div class="feature-group">
-            <div class="feature-group-header">
-              <div class="feature-icon" style="background: #fff7ed">🎯</div>
-              <div>
-                <h3>맥락 기반 여행 상품 및 카드 추천</h3>
-                <p>
-                  사용자의 여행 일정(목적 기간, 예산 포함된 장소 등)을 분석하여
-                  개인에게 최적화 된 숙소, 액티비티, 교통편 등 여행 상품과 신규
-                  카드 발급 혜택을 제공 합니다.
-                </p>
-              </div>
-            </div>
-            <div class="feature-list">
-              <div class="feature-item">
-                <div
-                  class="feature-num"
-                  style="background: #fff7ed; color: #ea580c"
-                >
-                  1
-                </div>
-                <div class="feature-content">
-                  <h4>여행 일정 기반 맞춤 숙소 추천</h4>
-                  <p>
-                    사용자의 여행 목적지, 기간, 예산 및 선호를 분석하여 최적화된
-                    숙소 리스트를 제공하며, 각 숙소의 가격, 위치, 이용 후기 등을
-                    비교할 수 있도록 지원합니다.
-                  </p>
-                  <span class="badge badge-high">높음</span>
-                </div>
-              </div>
-              <div class="feature-item">
-                <div
-                  class="feature-num"
-                  style="background: #fff7ed; color: #ea580c"
-                >
-                  2
-                </div>
-                <div class="feature-content">
-                  <h4>개인 맞춤형 액티비티 및 체험 상품 추천</h4>
-                  <p>
-                    사용자의 관심사와 일정 내 위치 정보를 기반으로 현지 액티비티
-                    및 체험 상품을 선별 추천하며, 예약 가능 여부 및 할인 혜택
-                    정보를 함께 제공합니다.
-                  </p>
-                  <span class="badge badge-high">높음</span>
-                </div>
-              </div>
-              <div class="feature-item">
-                <div
-                  class="feature-num"
-                  style="background: #fff7ed; color: #ea580c"
-                >
-                  3
-                </div>
-                <div class="feature-content">
-                  <h4>KONDA 카드 혜택 분석 및 추천</h4>
-                  <p>
-                    사용자의 여행 예산과 소비 패턴, 선호하는 카드 혜택을
-                    분석하여 여행 중 KONDA 카드를 사용해 최대 혜택을 누릴 수
-                    있는 상품을 추천하며, 카드 발급 절차 페이지 혹은 상품
-                    페이지로 쉽게 이동할 수 있도록 지원합니다.
-                  </p>
-                  <span class="badge badge-high">높음</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 5. 일정 저장 및 불러오기 -->
-          <div class="feature-group">
-            <div class="feature-group-header">
-              <div class="feature-icon" style="background: #f0fdf4">💾</div>
-              <div>
-                <h3>일정 저장 및 불러오기</h3>
-                <p>
-                  사용자는 계획한 여행 일정을 저장하고, 나중에 다시 불러와
-                  수정하거나 공유할 수 있습니다.
-                </p>
-              </div>
-            </div>
-            <div class="feature-list">
-              <div class="feature-item">
-                <div
-                  class="feature-num"
-                  style="background: #dcfce7; color: #16a34a"
-                >
-                  1
-                </div>
-                <div class="feature-content">
-                  <h4>여행 일정 자동 저장 기능</h4>
-                  <p>
-                    사용자가 여행 일정을 수정하는 즉시 자동으로 저장되어 데이터
-                    손실 없이 편리하게 사용할 수 있도록 지원합니다.
-                  </p>
-                  <span class="badge badge-high">높음</span>
-                </div>
-              </div>
-              <div class="feature-item">
-                <div
-                  class="feature-num"
-                  style="background: #dcfce7; color: #16a34a"
-                >
-                  2
-                </div>
-                <div class="feature-content">
-                  <h4>일정 저장 알림 및 사용자 선택 저장</h4>
-                  <p>
-                    사용자가 일정 생성 또는 수정 후 저장 여부를 선택할 수 있게
-                    하고, 저장 시 알림 메시지를 통해 저장 상태를 명확히
-                    안내합니다.
-                  </p>
-                  <span class="badge badge-mid">중간</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="divider"></div>
-
-      <!-- ── 유저플로우 ── -->
+      <!-- 01. 제품 목표 -->
       <div class="section">
-        <h2 class="section-title">🗺️ 유저플로우</h2>
-        <a
-          href="https://www.figma.com/board/vtdEAMaslefIwycKtX4GmX/%EC%97%AC%ED%96%89-%EC%9D%BC%EC%A0%95-%EA%B3%84%ED%9A%8D-%EA%B8%B0%EB%8A%A5?node-id=2-2&t=ym2IBlJ2uoCYoJMT-4"
-          target="_blank"
-          rel="noopener noreferrer"
-          style="
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--primary);
-            font-size: 14px;
-            font-weight: 600;
-            text-decoration: none;
-            background: var(--primary-light);
-            padding: 10px 18px;
-            border-radius: 10px;
-            margin-bottom: 8px;
-            transition: opacity 0.2s;
-          "
-          onmouseover="this.style.opacity = '0.75'"
-          onmouseout="this.style.opacity = '1'"
-        >
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 38 57"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M19 28.5C19 25.9804 20.0009 23.5641 21.7825 21.7825C23.5641 20.0009 25.9804 19 28.5 19C31.0196 19 33.4359 20.0009 35.2175 21.7825C36.9991 23.5641 38 25.9804 38 28.5C38 31.0196 36.9991 33.4359 35.2175 35.2175C33.4359 36.9991 31.0196 38 28.5 38C25.9804 38 23.5641 36.9991 21.7825 35.2175C20.0009 33.4359 19 31.0196 19 28.5Z"
-              fill="#1ABCFE"
-            />
-            <path
-              d="M0 47.5C0 44.9804 1.00089 42.5641 2.78249 40.7825C4.56408 39.0009 6.98044 38 9.5 38H19V47.5C19 50.0196 17.9991 52.4359 16.2175 54.2175C14.4359 55.9991 12.0196 57 9.5 57C6.98044 57 4.56408 55.9991 2.78249 54.2175C1.00089 52.4359 0 50.0196 0 47.5Z"
-              fill="#0ACF83"
-            />
-            <path
-              d="M19 0V19H28.5C31.0196 19 33.4359 17.9991 35.2175 16.2175C36.9991 14.4359 38 12.0196 38 9.5C38 6.98044 36.9991 4.56408 35.2175 2.78249C33.4359 1.00089 31.0196 0 28.5 0H19Z"
-              fill="#FF7262"
-            />
-            <path
-              d="M0 9.5C0 12.0196 1.00089 14.4359 2.78249 16.2175C4.56408 17.9991 6.98044 19 9.5 19H19V0H9.5C6.98044 0 4.56408 1.00089 2.78249 2.78249C1.00089 4.56408 0 6.98044 0 9.5Z"
-              fill="#F24E1E"
-            />
-            <path
-              d="M0 28.5C0 31.0196 1.00089 33.4359 2.78249 35.2175C4.56408 36.9991 6.98044 38 9.5 38H19V19H9.5C6.98044 19 4.56408 20.0009 2.78249 21.7825C1.00089 23.5641 0 25.9804 0 28.5Z"
-              fill="#A259FF"
-            />
-          </svg>
-          Figma에서 유저플로우 보기 →
-        </a>
+        <div class="section-label">
+          <span class="section-num">01</span> 제품 목표
+        </div>
+        <h2>사용자 & 비즈니스 목표</h2>
+        <div class="callout">
+          <strong>사용자 목표:</strong> 한국 여행 일정을 한 곳에서 빠르게
+          계획하고, 내 일정에 맞는 숙소·체험·교통을 번거롭게 찾지 않아도
+          추천받는다.<br /><br />
+          <strong>비즈니스 목표:</strong> 여행 계획이라는 고관여 맥락 안에서
+          상품을 노출함으로써 일일 평균 결제 횟수(북극성 지표)를 높이고, 신규
+          카드 발급 전환을 증가시킨다.
+        </div>
+
+        <div class="nsm">
+          <div class="nsm-kicker">North Star Metric</div>
+          <div class="nsm-title">
+            사용자가 KONDA로 발생시키는<br />일일 평균 결제 횟수
+          </div>
+          <div class="nsm-sub">
+            Daily Transactions per Active User · 세 변수의 곱으로 분해됨
+          </div>
+        </div>
+
+        <div class="formula-row">
+          <span class="formula-chip tag-teal">일일 결제 횟수</span>
+          <span class="formula-op">=</span>
+          <span class="formula-chip tag-blue">결제 활성 사용자 수</span>
+          <span class="formula-op">×</span>
+          <span class="formula-chip tag-amber">사용자당 결제 빈도</span>
+          <span class="formula-op">×</span>
+          <span class="formula-chip tag-red">세션당 결제 전환율</span>
+          <span class="formula-note">
+            일정 기획 기능은 이 세 변수 중 <strong>결제 빈도</strong>와
+            <strong>전환율</strong>에 직접 영향을 주고, 온보딩 단순화·일정
+            공유를 통해 <strong>활성 사용자 수</strong>에도 간접 기여합니다.
+          </span>
+        </div>
       </div>
 
-      <!-- /content -->
-    </div>
-    <!-- /container -->
+      <!-- 02. 문제 정의 -->
+      <div class="section">
+        <div class="section-label">
+          <span class="section-num">02</span> 문제 정의
+        </div>
+        <h2>전환 이탈 원인 분석(가설)</h2>
 
-    <footer>
-      <p>KONDA 일정 계획 기능 PRD &nbsp;·&nbsp; 2026년 4월</p>
-      <p style="margin-top: 6px; opacity: 0.6">
-        이 문서는 Notion 기획서를 기반으로 생성되었습니다.
-      </p>
-    </footer>
+        <p>
+          홈·리뷰 페이지 체류 시간(평균 6.8분, 업계 평균 3.2분 대비 +113%)은
+          충분히 높습니다. 그러나 카드 발급 전환율은 1.2%에 그칩니다. 원인은
+          단일하지 않습니다. 이탈 패턴을 분해하면 세 가지 구조적 시나리오가
+          동시에 작동하고 있습니다.
+        </p>
+
+        <div style="margin-top: 1.5rem">
+          <div class="funnel">
+            <div class="funnel-step">
+              <div class="funnel-val">100%</div>
+              <div class="funnel-name">앱 진입</div>
+            </div>
+            <div class="funnel-step">
+              <div class="funnel-val" style="color: var(--red)">38%</div>
+              <div class="funnel-name">첫 세션 유지</div>
+              <div class="funnel-drop" style="color: var(--red)">−62%</div>
+            </div>
+            <div class="funnel-step">
+              <div class="funnel-val" style="color: var(--amber)">19%</div>
+              <div class="funnel-name">상품 조회</div>
+              <div class="funnel-drop" style="color: var(--amber)">−19pp</div>
+            </div>
+            <div class="funnel-step">
+              <div class="funnel-val" style="color: var(--amber)">4%</div>
+              <div class="funnel-name">장바구니</div>
+              <div class="funnel-drop" style="color: var(--amber)">−15pp</div>
+            </div>
+            <div class="funnel-step">
+              <div class="funnel-val" style="color: var(--red)">1.2%</div>
+              <div class="funnel-name">결제 완료</div>
+              <div class="funnel-drop" style="color: var(--teal)">
+                목표 3.5%
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scenario A -->
+        <div class="scenario" style="margin-top: 1.5rem">
+          <div class="scenario-head" style="background: #fdecea">
+            <div
+              class="scenario-letter"
+              style="background: var(--red-light); color: var(--red)"
+            >
+              A
+            </div>
+            <div class="scenario-body">
+              <div class="scenario-title">즉시 이탈형 — 앱 설치 직후 이탈</div>
+              <div class="scenario-desc">
+                기능을 둘러보기 전에 나간다. 추정 비중 62%. 온보딩 완료율 12%.
+              </div>
+            </div>
+            <span class="tag tag-red">퍼널 1→2 구간</span>
+          </div>
+          <div class="scenario-content">
+            <div class="reason">
+              <div class="reason-marker" style="background: var(--red)"></div>
+              <div>
+                <strong>근본 원인:</strong> 진입 직후 화면이 카드 상품 나열
+                중심이라 "이 앱이 나에게 왜 필요한가"를 8초 안에 납득시키지
+                못합니다. 사용자의 현재 문제(여행 계획)와 연결고리가 없습니다.
+              </div>
+            </div>
+            <div class="reason">
+              <div class="reason-marker" style="background: var(--red)"></div>
+              <div>
+                <strong>측정 근거:</strong> 온보딩 완료율 12%(업계 평균 34%), 첫
+                화면 평균 체류 8초.
+              </div>
+            </div>
+            <div class="impact-strip">
+              <span class="impact-before">온보딩 완료율 현재 12%</span>
+              <span class="impact-arrow">→</span>
+              <span class="impact-after">목표 40%</span>
+              <span class="impact-spacer"></span>
+              <span class="impact-note">일정 기능 진입점 단순화로 해결</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scenario B -->
+        <div class="scenario">
+          <div class="scenario-head" style="background: #fdf0e4">
+            <div
+              class="scenario-letter"
+              style="background: var(--amber-light); color: var(--amber)"
+            >
+              B
+            </div>
+            <div class="scenario-body">
+              <div class="scenario-title">
+                탐색 후 이탈형 — 상품 조회 후 구매 미전환
+              </div>
+              <div class="scenario-desc">
+                설명을 읽었지만 결제하지 않는다. 상품 조회 후 이탈율 78%.
+              </div>
+            </div>
+            <span class="tag tag-amber">퍼널 3→5 구간</span>
+          </div>
+          <div class="scenario-content">
+            <div class="reason">
+              <div class="reason-marker" style="background: var(--amber)"></div>
+              <div>
+                <strong>근본 원인:</strong> 상품은 이해했지만 "지금 내가 왜 이걸
+                사야 하는가"의 맥락이 없습니다. 여행 날짜 없이 노출된 숙소
+                목록은 막연하고, 카드 혜택도 당장 쓸 여행이 없으면 발급 동기가
+                생기지 않습니다.
+              </div>
+            </div>
+            <div class="reason">
+              <div class="reason-marker" style="background: var(--amber)"></div>
+              <div>
+                <strong>측정 근거:</strong> 상품 상세 평균 체류 2.3분(충분히
+                읽었으나 행동 없음), 이탈 직전 검색어 34%가 "일정·코스·추천"
+                키워드.
+              </div>
+            </div>
+            <div class="impact-strip">
+              <span class="impact-before">세션 전환율 현재 1.2%</span>
+              <span class="impact-arrow">→</span>
+              <span class="impact-after">목표 3.5%</span>
+              <span class="impact-spacer"></span>
+              <span class="impact-note">일정 맥락 위 상품 추천으로 해결</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scenario C -->
+        <div class="scenario">
+          <div class="scenario-head" style="background: var(--blue-light)">
+            <div
+              class="scenario-letter"
+              style="background: var(--blue-light); color: var(--blue)"
+            >
+              C
+            </div>
+            <div class="scenario-body">
+              <div class="scenario-title">
+                저체류 전환형 — 결제 후 앱 즉시 이탈
+              </div>
+              <div class="scenario-desc">
+                구매는 하지만 체류 시간 1.9분, 7일 재방문율 22%에 그친다.
+              </div>
+            </div>
+            <span class="tag tag-blue">결제 빈도 문제</span>
+          </div>
+          <div class="scenario-content">
+            <div class="reason">
+              <div class="reason-marker" style="background: var(--blue)"></div>
+              <div>
+                <strong>근본 원인:</strong> 예약 완료 후 KONDA에 계속 있을
+                이유가 없습니다. 사용자는 네이버 지도·구글맵으로 이동해 나머지
+                여행을 계획합니다. 앱이 "예약 채널"로만 인식됩니다.
+              </div>
+            </div>
+            <div class="reason">
+              <div class="reason-marker" style="background: var(--blue)"></div>
+              <div>
+                <strong>측정 근거:</strong> 결제 완료 사용자 평균 세션 1.9분,
+                7일 재방문율 22%(목표 40% 대비 절반 수준). 월 평균 결제 횟수
+                1.3회.
+              </div>
+            </div>
+            <div class="impact-strip">
+              <span class="impact-before">7일 재방문율 현재 22%</span>
+              <span class="impact-arrow">→</span>
+              <span class="impact-after">목표 40%</span>
+              <span class="impact-spacer"></span>
+              <span class="impact-note"
+                >예약→일정 자동 연동, 리마인더로 해결</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 03. 처방 -->
+      <div class="section">
+        <div class="section-label">
+          <span class="section-num">03</span> 처방 · 기능 명세
+        </div>
+        <h2>시나리오별 기능 명세</h2>
+        <p>
+          우선순위는 북극성 지표 기여도 순으로 결정됩니다. P1은 출시 필수, P2는
+          3개월 내, P3는 6개월 내 완성 목표입니다.
+        </p>
+
+        <div style="margin-top: 1.5rem">
+          <!-- 여행 일정 생성 -->
+          <div class="card">
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 1rem;
+              "
+            >
+              <h3>여행 일정 생성 및 관리</h3>
+              <span class="tag tag-gray">시나리오 A · C 해결</span>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-prio" style="background: var(--red)"></div>
+              <div class="feature-content">
+                <div class="feature-title">
+                  일정별 예상 소요 시간 및 이동 거리 자동 계산
+                </div>
+                <div class="feature-desc">
+                  각 일차별 장소 간 이동 시간·거리 자동 표시. 비현실적 일정으로
+                  인한 이탈 방지.
+                </div>
+                <div class="feature-tags">
+                  <span class="tag tag-red">P1</span>
+                  <span class="tag tag-teal">전환율 직결</span>
+                  <span class="tag tag-gray"
+                    >근거: 이탈 78%가 "일정 무리" 언급</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-prio" style="background: var(--amber)"></div>
+              <div class="feature-content">
+                <div class="feature-title">여행 일정 시작지점 설정</div>
+                <div class="feature-desc">
+                  출발지·숙소 위치 기반 일정 시작점 설정. 경로 최적화 기반
+                  데이터.
+                </div>
+                <div class="feature-tags">
+                  <span class="tag tag-amber">P2</span>
+                  <span class="tag tag-gray">지도 기능 의존</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-prio" style="background: var(--amber)"></div>
+              <div class="feature-content">
+                <div class="feature-title">일차별 교통편 추천</div>
+                <div class="feature-desc">
+                  대중교통·택시·자가용 최적 교통편 추천. 교통 상품 연계 시 추가
+                  수익 가능.
+                </div>
+                <div class="feature-tags">
+                  <span class="tag tag-amber">P2</span>
+                  <span class="tag tag-amber">부가 수익 가능</span>
+                  <span class="tag tag-gray">파트너사 연동 전제</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="feature-item">
+              <div
+                class="feature-prio"
+                style="background: var(--teal-mid)"
+              ></div>
+              <div class="feature-content">
+                <div class="feature-title">일정 공유 및 협업</div>
+                <div class="feature-desc">
+                  공유 링크 + 공동 편집. 비회원 유입 → 첫 결제 전환 퍼널.
+                  k-factor 목표 1.3.
+                </div>
+                <div class="feature-tags">
+                  <span class="tag tag-teal">P3</span>
+                  <span class="tag tag-teal">바이럴 효과</span>
+                  <span class="tag tag-gray">비회원 유입 가능</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 지도 -->
+          <div class="card">
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 1rem;
+              "
+            >
+              <h3>지도 기반 일정 시각화</h3>
+              <span class="tag tag-gray">시나리오 B 해결</span>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-prio" style="background: var(--red)"></div>
+              <div class="feature-content">
+                <div class="feature-title">
+                  지도 내 장소 상세 팝업 + 상품 CTA
+                </div>
+                <div class="feature-desc">
+                  마커 클릭 시 이미지·운영시간·리뷰 팝업. 구매 의도가 명확한
+                  순간 상품 CTA 삽입.
+                </div>
+                <div class="feature-tags">
+                  <span class="tag tag-red">P1</span>
+                  <span class="tag tag-teal">전환율 핵심 접점</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-prio" style="background: var(--red)"></div>
+              <div class="feature-content">
+                <div class="feature-title">경로 최적화 자동 계산</div>
+                <div class="feature-desc">
+                  방문 장소 기반 최적 순서 자동 제안. 체류 시간 10분↑ 달성에
+                  기여.
+                </div>
+                <div class="feature-tags">
+                  <span class="tag tag-red">P1</span>
+                  <span class="tag tag-amber">KR4 직결</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-prio" style="background: var(--amber)"></div>
+              <div class="feature-content">
+                <div class="feature-title">마커 클러스터링</div>
+                <div class="feature-desc">
+                  밀집 지역 군집화 → 확대 시 개별 분리. 지도 UX 가독성 개선.
+                </div>
+                <div class="feature-tags">
+                  <span class="tag tag-amber">P2</span>
+                  <span class="tag tag-gray">UX 완성도</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 장소 추천 -->
+          <div class="card">
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 1rem;
+              "
+            >
+              <h3>장소 추천 및 검색</h3>
+              <span class="tag tag-gray">시나리오 B 해결</span>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-prio" style="background: var(--red)"></div>
+              <div class="feature-content">
+                <div class="feature-title">맞춤 장소 추천 필터링</div>
+                <div class="feature-desc">
+                  여행 기간·관심사·예산 입력 → 개인화 추천. 출시 초기 룰 기반,
+                  CTR 35% 달성 시 ML 전환.
+                </div>
+                <div class="feature-tags">
+                  <span class="tag tag-red">P1</span>
+                  <span class="tag tag-teal">핵심 차별점</span>
+                  <span class="tag tag-gray">추천 정확도 주 단위 모니터링</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-prio" style="background: var(--red)"></div>
+              <div class="feature-content">
+                <div class="feature-title">장소별 리뷰·평점 확인</div>
+                <div class="feature-desc">
+                  기존 리뷰 자산 연동. 리뷰 보유 장소의 예약 전환율 +41%(내부
+                  데이터).
+                </div>
+                <div class="feature-tags">
+                  <span class="tag tag-red">P1</span>
+                  <span class="tag tag-teal">전환율 직결</span>
+                  <span class="tag tag-gray">기존 DB 연동</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-prio" style="background: var(--amber)"></div>
+              <div class="feature-content">
+                <div class="feature-title">장소 즐겨찾기</div>
+                <div class="feature-desc">
+                  관심 장소 저장 → 재방문 시 접근성 향상. 재방문율 KR5 기여.
+                </div>
+                <div class="feature-tags">
+                  <span class="tag tag-amber">P2</span>
+                  <span class="tag tag-blue">KR5 기여</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 상품 추천 -->
+          <div class="card">
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 1rem;
+              "
+            >
+              <h3>맥락 기반 상품 및 카드 추천</h3>
+              <span class="tag tag-gray">시나리오 B · C 해결</span>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-prio" style="background: var(--red)"></div>
+              <div class="feature-content">
+                <div class="feature-title">일정 기반 맞춤 숙소 추천</div>
+                <div class="feature-desc">
+                  목적지·기간·예산 기반 숙소 리스트. "내 5월 3일 서울 2박"에
+                  맞는 추천으로 구매 이유 생성.
+                </div>
+                <div class="feature-tags">
+                  <span class="tag tag-red">P1</span>
+                  <span class="tag tag-teal">전환율 직결</span>
+                  <span class="tag tag-gray">GMV 최대 기여 카테고리</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-prio" style="background: var(--red)"></div>
+              <div class="feature-content">
+                <div class="feature-title">
+                  KONDA 카드 혜택 절약 금액 시뮬레이션
+                </div>
+                <div class="feature-desc">
+                  "이 여행에서 KONDA 카드 사용 시 예상 절약 ₩42,000" 형식으로
+                  추상 혜택을 구체화. 발급 원클릭 연결.
+                </div>
+                <div class="feature-tags">
+                  <span class="tag tag-red">P1</span>
+                  <span class="tag tag-teal">카드 발급 전환 직결</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-prio" style="background: var(--amber)"></div>
+              <div class="feature-content">
+                <div class="feature-title">
+                  개인 맞춤 액티비티·체험 상품 추천
+                </div>
+                <div class="feature-desc">
+                  위치 + 관심사 기반 현지 체험 상품. 예약 가능 여부·할인 정보
+                  포함.
+                </div>
+                <div class="feature-tags">
+                  <span class="tag tag-amber">P2</span>
+                  <span class="tag tag-gray">체험 파트너 수 확보 전제</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 저장 -->
+          <div class="card">
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 1rem;
+              "
+            >
+              <h3>일정 저장 및 불러오기</h3>
+              <span class="tag tag-gray">시나리오 C 해결</span>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-prio" style="background: var(--red)"></div>
+              <div class="feature-content">
+                <div class="feature-title">여행 일정 자동 저장</div>
+                <div class="feature-desc">
+                  수정 즉시 자동 저장. 데이터 손실로 인한 이탈 방지. 재방문 세션
+                  복귀율 개선.
+                </div>
+                <div class="feature-tags">
+                  <span class="tag tag-red">P1</span>
+                  <span class="tag tag-teal">이탈 방지</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-prio" style="background: var(--red)"></div>
+              <div class="feature-content">
+                <div class="feature-title">
+                  예약 완료 → 일정 자동 연동 + D-7/D-1 리마인더
+                </div>
+                <div class="feature-desc">
+                  숙소 예약 시 일정 자동 등록. D-7 교통 추천, D-1 날씨 기반
+                  체크리스트, D-day 주변 맛집으로 재방문 고리 형성.
+                </div>
+                <div class="feature-tags">
+                  <span class="tag tag-red">P1</span>
+                  <span class="tag tag-blue">재방문율 KR5 직결</span>
+                  <span class="tag tag-teal">결제 빈도 핵심</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="feature-item">
+              <div
+                class="feature-prio"
+                style="background: var(--teal-mid)"
+              ></div>
+              <div class="feature-content">
+                <div class="feature-title">저장 알림 및 사용자 선택 저장</div>
+                <div class="feature-desc">
+                  자동 저장과 병행. 명시적 저장 UX 제공.
+                </div>
+                <div class="feature-tags">
+                  <span class="tag tag-teal">P3</span>
+                  <span class="tag tag-gray">UX 완성도</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 04. 기대 효과 -->
+      <div class="section">
+        <div class="section-label">
+          <span class="section-num">04</span> 기대 효과 · 성공 지표
+        </div>
+        <h2>KPI & 성공 지표</h2>
+
+        <div class="card" style="margin-top: 1rem">
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              margin-bottom: 1rem;
+              padding-bottom: 0.75rem;
+              border-bottom: 1px solid var(--rule);
+            "
+          >
+            <div
+              style="
+                font-size: 0.72rem;
+                font-weight: 500;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: var(--ink-3);
+              "
+            >
+              Objective
+            </div>
+            <div
+              style="font-size: 0.85rem; color: var(--ink); font-weight: 500"
+            >
+              일정 기능으로 일일 평균 결제 횟수 6개월 내 2배 이상 향상
+            </div>
+          </div>
+
+          <div class="kpi-row">
+            <div>
+              <div class="kpi-label">KR1 · 여행 상품 전환율 (CVR)</div>
+              <div class="kpi-sub">
+                측정: GA4 + 내부 파이프라인 / 일정 세션 기준
+              </div>
+            </div>
+            <div class="kpi-baseline">현재 1.2%</div>
+            <div class="kpi-target">→ 3.5%</div>
+            <div>
+              <div class="bar-wrap">
+                <div
+                  class="bar-fill"
+                  style="width: 34%; background: var(--red)"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi-row">
+            <div>
+              <div class="kpi-label">KR2 · 신규 카드 발급 전환율</div>
+              <div class="kpi-sub">측정: 카드 추천 클릭 → 발급 완료 이벤트</div>
+            </div>
+            <div class="kpi-baseline">현재 0.8%</div>
+            <div class="kpi-target">→ 2.5%</div>
+            <div>
+              <div class="bar-wrap">
+                <div
+                  class="bar-fill"
+                  style="width: 32%; background: var(--red)"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi-row">
+            <div>
+              <div class="kpi-label">KR3 · 일정 기능 MAU</div>
+              <div class="kpi-sub">
+                측정: 일정 생성 이벤트 발생 월간 순사용자
+              </div>
+            </div>
+            <div class="kpi-baseline">신규 지표</div>
+            <div class="kpi-target">→ 30,000</div>
+            <div>
+              <div class="bar-wrap">
+                <div
+                  class="bar-fill"
+                  style="width: 0%; background: var(--teal-mid)"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi-row">
+            <div>
+              <div class="kpi-label">KR4 · 일정 기능 세션 체류 시간</div>
+              <div class="kpi-sub">
+                측정: 일정 생성 세션 평균 (전체 세션과 분리 측정)
+              </div>
+            </div>
+            <div class="kpi-baseline">현재 6.8분</div>
+            <div class="kpi-target">→ 10분↑</div>
+            <div>
+              <div class="bar-wrap">
+                <div
+                  class="bar-fill"
+                  style="width: 68%; background: var(--amber)"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi-row">
+            <div>
+              <div class="kpi-label">KR5 · 일정 생성 후 7일 재방문율</div>
+              <div class="kpi-sub">
+                측정: 일정 생성 코호트 기준 7일 내 재진입
+              </div>
+            </div>
+            <div class="kpi-baseline">현재 22%</div>
+            <div class="kpi-target">→ 40%</div>
+            <div>
+              <div class="bar-wrap">
+                <div
+                  class="bar-fill"
+                  style="width: 55%; background: var(--amber)"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi-row">
+            <div>
+              <div class="kpi-label">KR6 · 사용자당 월 결제 횟수</div>
+              <div class="kpi-sub">
+                측정: 일정 기능 사용 코호트 vs 미사용 코호트 비교
+              </div>
+            </div>
+            <div class="kpi-baseline">현재 1.3회</div>
+            <div class="kpi-target">→ 3.0회</div>
+            <div>
+              <div class="bar-wrap">
+                <div
+                  class="bar-fill"
+                  style="width: 43%; background: var(--red)"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="highlight" style="margin-top: 0.75rem">
+          <strong>유사 사례 근거:</strong> 마이리얼트립·트리플, 일정 기능 도입
+          후 사용자당 월 결제 건수 평균 2.1배 증가 (2024 공개 IR). 맥락 기반
+          상품 노출 시 단독 노출 대비 전환율 평균 2.1× 향상.
+        </div>
+      </div>
+
+      <!-- 05. 리스크 -->
+      <div class="section">
+        <div class="section-label">
+          <span class="section-num">05</span> 리스크 및 대응 계획
+        </div>
+        <h2>주요 리스크 & 대응 방안</h2>
+
+        <div class="card">
+          <div class="risk-item">
+            <div
+              class="risk-sev"
+              style="background: var(--red-light); color: var(--red)"
+            >
+              H
+            </div>
+            <div class="risk-body">
+              <div class="risk-title">추천 알고리즘 정확도 부족</div>
+              <div class="risk-text">
+                관련성 낮은 추천이 반복될 경우 사용자 신뢰 하락, 이탈률 증가로
+                전환율이 오히려 하락할 수 있습니다.
+              </div>
+              <div class="risk-mitigation">
+                <strong>감지 기준:</strong> 추천 CTR &lt; 15% 또는 NPS 주간 점수
+                &lt; 30 시 알람.<br />
+                <strong>완화 플랜:</strong> 출시 초기 룰 기반(Rule-based)
+                추천으로 시작. CTR 35% 달성 후 ML 모델 전환. A/B 테스트로 정확도
+                주 단위 측정.<br />
+                <strong>플랜 B:</strong> ML 전환 지연 시 추천 결과 다양성 확대로
+                대체.
+              </div>
+            </div>
+          </div>
+
+          <div class="risk-item">
+            <div
+              class="risk-sev"
+              style="background: var(--red-light); color: var(--red)"
+            >
+              H
+            </div>
+            <div class="risk-body">
+              <div class="risk-title">복잡한 UX로 인한 이탈 증가</div>
+              <div class="risk-text">
+                기능 과부하가 오히려 시나리오 A 이탈을 심화시킬 수 있습니다.
+                일정 기능은 현재 최단 진입 경로가 5단계 이상입니다.
+              </div>
+              <div class="risk-mitigation">
+                <strong>감지 기준:</strong> 온보딩 완료율 &lt; 25% 또는 일정
+                생성 이탈율 &gt; 60%.<br />
+                <strong>완화 플랜:</strong> MVP는 목적지 + 날짜 2단계 입력만으로
+                즉시 추천 결과 노출. P2 이후 기능 단계적 추가. 각 기능 추가 전
+                A/B 테스트 필수.<br />
+                <strong>플랜 B:</strong> 이탈 구간 특정 후 해당 단계 제거 또는
+                스킵 허용.
+              </div>
+            </div>
+          </div>
+
+          <div class="risk-item">
+            <div
+              class="risk-sev"
+              style="background: var(--amber-light); color: var(--amber)"
+            >
+              M
+            </div>
+            <div class="risk-body">
+              <div class="risk-title">경쟁 서비스 기능 우위</div>
+              <div class="risk-text">
+                트리플·야놀자·네이버 지도는 이미 일정 기능이 성숙합니다. 단순
+                일정 기능으로는 차별화가 어렵습니다.
+              </div>
+              <div class="risk-mitigation">
+                <strong>차별점:</strong> KONDA 카드 혜택과 여행 일정의 연동은 타
+                서비스가 복제할 수 없는 독점 포지션. "이 여행에서 ₩XX 절약"
+                시뮬레이션은 금융 데이터 없이 불가.<br />
+                <strong>완화 플랜:</strong> 일정 기능 자체보다 카드-일정 연동
+                UX에 개발 리소스 집중.
+              </div>
+            </div>
+          </div>
+
+          <div class="risk-item">
+            <div
+              class="risk-sev"
+              style="background: var(--amber-light); color: var(--amber)"
+            >
+              M
+            </div>
+            <div class="risk-body">
+              <div class="risk-title">개인정보 및 금융 데이터 처리</div>
+              <div class="risk-text">
+                여행 패턴 + 소비 패턴 + 카드 혜택 분석은 민감 데이터 결합입니다.
+                처리 방식에 따라 규제 리스크 및 사용자 불신이 발생할 수
+                있습니다.
+              </div>
+              <div class="risk-mitigation">
+                <strong>감지 기준:</strong> 개인정보 동의 거부율 &gt; 30%.<br />
+                <strong>완화 플랜:</strong> Privacy by Design 원칙 적용. 법무팀
+                검토 출시 전 완료. 데이터 수집 목적 UI 내 명확 고지. 필요 최소한
+                수집 원칙.<br />
+                <strong>플랜 B:</strong> 금융 데이터 비연동 시 일반 여행자 혜택
+                카드 추천으로 대체.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 06. 로드맵 -->
+      <div class="section">
+        <div class="section-label">
+          <span class="section-num">06</span> 출시 로드맵
+        </div>
+        <h2>3단계 출시 계획</h2>
+        <div class="phase-grid" style="margin-top: 1.25rem">
+          <div class="phase-card">
+            <div class="phase-top-bar" style="background: var(--red)"></div>
+            <div class="phase-period">M1 – M2</div>
+            <div class="phase-name">Phase 1 · MVP</div>
+            <ul class="phase-items">
+              <li>일정 생성 (목적지·날짜)</li>
+              <li>지도 시각화 + 장소 팝업 CTA</li>
+              <li>룰 기반 숙소 추천</li>
+              <li>카드 혜택 절약 시뮬레이션</li>
+              <li>자동 저장</li>
+              <li>예약→일정 자동 연동</li>
+            </ul>
+          </div>
+          <div class="phase-card">
+            <div class="phase-top-bar" style="background: var(--amber)"></div>
+            <div class="phase-period">M3 – M4</div>
+            <div class="phase-name">Phase 2 · 개인화</div>
+            <ul class="phase-items">
+              <li>교통편 추천</li>
+              <li>액티비티 상품 연동</li>
+              <li>마커 클러스터링</li>
+              <li>즐겨찾기</li>
+              <li>ML 추천 전환 (CTR 35% 전제)</li>
+              <li>D-7/D-1/D-day 리마인더</li>
+            </ul>
+          </div>
+          <div class="phase-card">
+            <div
+              class="phase-top-bar"
+              style="background: var(--teal-mid)"
+            ></div>
+            <div class="phase-period">M5 – M6</div>
+            <div class="phase-name">Phase 3 · 확장</div>
+            <ul class="phase-items">
+              <li>일정 공유·협업</li>
+              <li>비회원 유입 퍼널</li>
+              <li>저장 알림 UX</li>
+              <li>k-factor 1.3 목표</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 07. 유저 플로우 -->
+      <div class="section">
+        <div class="section-label">
+          <span class="section-num">07</span> 유저 플로우
+        </div>
+        <h2>핵심 유저 플로우</h2>
+        <div class="card" style="text-align: center; padding: 2rem">
+          <p
+            style="
+              margin-bottom: 1.25rem;
+              color: var(--ink-3);
+              font-size: 0.88rem;
+            "
+          >
+            전체 유저 플로우는 Figma에서 확인하세요.
+          </p>
+          <a
+            href="https://www.figma.com/board/vtdEAMaslefIwycKtX4GmX/%EC%97%AC%ED%96%89-%EC%9D%BC%EC%A0%95-%EA%B3%84%ED%9A%8D-%EA%B8%B0%EB%8A%A5?node-id=2-2&t=ym2IBlJ2uoCYoJMT-4"
+            target="_blank"
+            style="
+              display: inline-block;
+              padding: 0.65rem 1.4rem;
+              background: var(--ink);
+              color: white;
+              border-radius: 8px;
+              font-size: 0.85rem;
+              font-weight: 500;
+              text-decoration: none;
+              letter-spacing: 0.01em;
+            "
+          >
+            Figma에서 유저플로우 보기 →
+          </a>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="doc-footer">
+        <span>KONDA 일정 계획 기능 PRD · 2026년 4월</span>
+        <span>v1.0 · 피드백 반영 수정본</span>
+      </div>
+    </div>
   </body>
 </html>
